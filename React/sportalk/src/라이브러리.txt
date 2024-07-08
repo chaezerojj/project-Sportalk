@@ -1,0 +1,10 @@
+라이브러리 설치  
+
+* 리액트 라우터
+npm install react-router-dom
+
+* mui
+npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
+
+* styled components  --> css 처럼 사용 가능
+npm install styled-components
