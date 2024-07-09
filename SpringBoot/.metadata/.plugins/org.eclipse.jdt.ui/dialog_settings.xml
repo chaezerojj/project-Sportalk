@@ -37,10 +37,12 @@
 		<item key="updateTextualMatches" value="false"/>
 		<item key="updateQualifiedNames" value="false"/>
 		<item key="patterns" value="*"/>
+		<item key="updateSimilarElements" value="false"/>
+		<item key="updateSimilarElementsMatchStrategy" value="1"/>
 	</section>
 	<section name="NewClassCreationWizard.dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="225"/>
-		<item key="DIALOG_Y_ORIGIN" value="-55"/>
+		<item key="DIALOG_X_ORIGIN" value="323"/>
+		<item key="DIALOG_Y_ORIGIN" value="221"/>
 		<item key="DIALOG_WIDTH" value="575"/>
 		<item key="DIALOG_HEIGHT" value="659"/>
 		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
@@ -53,7 +55,16 @@
 		<item key="create_unimplemented" value="true"/>
 	</section>
 	<section name="completion_proposal_size">
+		<item key="size.x" value="528"/>
+		<item key="size.y" value="252"/>
 	</section>
 	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="NewInterfaceCreationWizard.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="222"/>
+		<item key="DIALOG_Y_ORIGIN" value="161"/>
+		<item key="DIALOG_WIDTH" value="580"/>
+		<item key="DIALOG_HEIGHT" value="543"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
 	</section>
 </section>
