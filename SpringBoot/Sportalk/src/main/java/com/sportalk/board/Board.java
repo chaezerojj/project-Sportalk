@@ -26,15 +26,17 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id; // 아이디
 
-    private String title;
-    private String content;
     private Date createDate;
+    private String nickName; // 닉네임
+    private String title; // 게시물 제목
+    private String content; // 게시물 본문
+    private Date regDate; // 게시물 작성일
+    private int like; // 좋아요 수
+    private int commentCount; // 댓글 수
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    private String nickName;
 
     // 엔티티가 로드될 때 자동으로 User의 nickName 필드와 동기화
     @PostLoad
