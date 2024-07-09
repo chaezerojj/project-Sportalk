@@ -62,4 +62,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Spring Boot specific
+SpringBoot/.metadata/
+SpringBoot/.indexes/
+SpringBoot/*.snap
+SpringBoot/target/
+
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,visualstudiocode,react
