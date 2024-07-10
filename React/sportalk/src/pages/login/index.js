@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
-function Login() {
+function Index() {
   const [form, setForm] = useState({
     userId: '',
     password: '',
@@ -49,4 +49,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Index;
