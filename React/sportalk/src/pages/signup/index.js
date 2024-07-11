@@ -105,7 +105,6 @@ function Index() {
     );
   }
 
-function Index() {
   return (
     <div className="signup-container">
       <form onSubmit={handleSubmit} className="signup-form">
@@ -259,5 +258,5 @@ function Index() {
     </div>
   );
 }
-}
+
 export default Index;
