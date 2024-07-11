@@ -51,9 +51,9 @@ public class BoardController {
 	// id값으로 게시물 상세 조회
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Board> getBoardById(@PathVariable Long id) {
-		Optional<Board> board = boardService.getBoardById(id);
-		return board.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+	    Optional<Board> board = boardService.getBoardById(id);
+	    return board.map(ResponseEntity::ok)
+	            .orElse(ResponseEntity.notFound().build());
 	}
 
 	// 게시물 수정

@@ -5,6 +5,7 @@ import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 import PaginationCustom from './pagination';
 import SearchBar from './searchBar';
 import Sort from './sort';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 
 
@@ -22,7 +23,7 @@ export default function Index() {
 			})
 			.catch(err=>console.error(err))
 	}
-
+	
 	useEffect(()=>{
 		fetchPosts()
 	},[])
@@ -81,6 +82,13 @@ export default function Index() {
 		setSortType(type)
 		setCurrentPage(1)
 	}
+	// 상세페이지로 이동
+
+	const navigate=useNavigate();
+
+	const goToDetailPage = postId => {
+    navigate(`/sportalk/board/${postId}`);
+  }
   return (
 
     <S.Wrapper>
@@ -105,7 +113,14 @@ export default function Index() {
           {currentPosts.map((post, i) => (
             <TableRow key={post.id}>
               <TableCell align="center">{i + 1}</TableCell>
-              <TableCell align="left">{post.title}</TableCell>
+              <TableCell align="left">
+							<button
+                    onClick={() => goToDetailPage(post.id)}
+                    style={{ textDecoration: "none", color: "inherit", background: "none", border: "none", cursor: "pointer" }}
+                  >
+                    {post.title}
+              </button>
+							</TableCell>
               <TableCell align="center">{post.nickName}</TableCell>
               <TableCell align="center">{post.regDate}</TableCell>
               <TableCell align="center">{post.like}</TableCell>

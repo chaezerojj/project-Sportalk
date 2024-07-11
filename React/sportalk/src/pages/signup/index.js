@@ -17,10 +17,28 @@ function Index() {
     emailDomain: '@naver.com',
   });
 
+  const [errors, setErrors] = useState({
+    userId: '',
+    nickName: '',
+  });
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    if (name === 'userId' && value.length < 6) {
+      setErrors({ ...errors, userId: '' });
+    } else {
+      setErrors({ ...errors, userId: '' });
+    }
+
+    if (name === 'nickName' && value.length < 2) {
+      setErrors({ ...errors, nickName: '' });
+    } else {
+      setErrors({ ...errors, nickName: '' });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -63,6 +81,10 @@ function Index() {
     }
     if (field === 'userId' && value.length < 6) {
       alert('아이디는 6자 이상이어야 합니다');
+      return;
+    }
+    if (field === 'nickName' && value.length < 2) {
+      alert('닉네임은 2자 이상이어야 합니다');
       return;
     }
 
@@ -118,7 +140,7 @@ function Index() {
               name="userId"
               value={form.userId}
               onChange={handleChange}
-              placeholder="아이디 입력 (6-20자)"
+              placeholder="아이디 입력 (6-12자)"
             />
             <button
               type="button"
@@ -128,11 +150,7 @@ function Index() {
               중복확인
             </button>
           </div>
-          {form.userId.length > 0 && form.userId.length < 6 && (
-            <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>
-              아이디는 6자 이상이어야 합니다.
-            </p>
-          )}
+          {errors.userId && <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>{errors.userId}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="nickName">닉네임</label>
@@ -153,11 +171,7 @@ function Index() {
               중복확인
             </button>
           </div>
-          {form.nickName.length > 0 && form.nickName.length < 2 && (
-            <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>
-              닉네임은 2자 이상이어야 합니다.
-            </p>
-          )}
+          {errors.nickName && <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>{errors.nickName}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="password">비밀번호</label>
@@ -167,13 +181,8 @@ function Index() {
             name="password"
             value={form.password}
             onChange={handleChange}
-            placeholder="비밀번호 입력 (8-20자)"
+            placeholder="비밀번호 입력 (10-20자)"
           />
-          {form.password.length > 0 && form.password.length < 8 && (
-            <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>
-              비밀번호는 8자 이상이어야 합니다.
-            </p>
-          )}
         </div>
         <div className="form-group">
           <label htmlFor="confirmPassword">비밀번호 확인</label>
@@ -206,10 +215,11 @@ function Index() {
             value={form.phoneNumber}
             onChange={handleChange}
             placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)"
+            maxLength={11} // 전화번호 입력 길이를 제한합니다.
           />
           {form.phoneNumber.length > 0 && form.phoneNumber.length < 11 && (
             <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>
-              전화번호는 11자 이상이어야 합니다.
+              전화번호는 11자입니다.
             </p>
           )}
         </div>

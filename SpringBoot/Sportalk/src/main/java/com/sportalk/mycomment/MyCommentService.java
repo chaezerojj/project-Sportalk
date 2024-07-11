@@ -13,7 +13,7 @@ public class MyCommentService {
 	@Autowired
 	private CommentRepository commentRepository;
 	
-	public List<Comment> findCommentsByUserId(String userId) {
+	public List<Comment> findCommentsByUserId(Long userId) {
 		return commentRepository.findByUserId(userId);
 	}
 }
