@@ -42,7 +42,7 @@ function Index() {
         <button type="submit">로그인</button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <p className="login-message"><br></br>
-          계정이 없으신가요? <Link to="/signup" className="login-link">회원가입</Link>
+          계정이 없으신가요? <Link to="/sportalk/signup" className="login-link">회원가입</Link>
         </p>
       </form>
     </div>
