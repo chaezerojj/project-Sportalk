@@ -10,10 +10,11 @@ import com.sportalk.board.BoardRepository;
 
 @Service
 public class MyPostService {
-	@Autowired
-	private BoardRepository boardRepository;
-	
-	public List<Board> findPostsByUserId(String userId) {
-		return boardRepository.findByUserId(userId);
-	}
+
+ @Autowired
+ private BoardRepository boardRepository;
+
+ public List<Board> findPostsByUserId(Long userId) {
+     return boardRepository.findByUserId(userId);
+ }
 }
