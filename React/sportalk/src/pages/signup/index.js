@@ -17,6 +17,7 @@ function Index() {
     emailDomain: '@naver.com',
   });
 
+  
   const [errors, setErrors] = useState({
     userId: '',
     nickName: '',
