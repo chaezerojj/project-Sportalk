@@ -1,6 +1,8 @@
 package com.sportalk.board;
 
-import java.sql.Date;
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.sportalk.user.User;
 
@@ -26,11 +28,12 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id; // 아이디
 
-    private Date createDate;
+//    private Date createDate; //수정 일자
     private String nickName; // 닉네임
     private String title; // 게시물 제목
     private String content; // 게시물 본문
-    private Date regDate; // 게시물 작성일
+    @DateTimeFormat(pattern="yyyy-mm-dd")
+    private LocalDate regDate; // 게시물 작성일
     private int like; // 좋아요 수
     private int commentCount; // 댓글 수
 

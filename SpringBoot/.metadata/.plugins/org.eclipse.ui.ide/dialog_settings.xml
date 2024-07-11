@@ -23,10 +23,10 @@
 		<item value="org.eclipse.pde:3.15.300.v20240229-0520"/>
 		<item value="org.eclipse.platform:4.31.0.v20240229-1022"/>
 		<item value="org.eclipse.rcp:4.31.0.v20240229-0520"/>
-		<item value="org.eclipse.tm.terminal.connector.ssh.feature:11.6.0.202403071917"/>
-		<item value="org.eclipse.tm.terminal.control.feature:11.6.0.202403071917"/>
-		<item value="org.eclipse.tm.terminal.feature:11.6.0.202403071917"/>
-		<item value="org.eclipse.tm.terminal.view.feature:11.6.0.202403071917"/>
+		<item value="org.eclipse.tm.terminal.connector.ssh.feature:11.5.0.202312281935"/>
+		<item value="org.eclipse.tm.terminal.control.feature:11.5.0.202312281935"/>
+		<item value="org.eclipse.tm.terminal.feature:11.5.0.202312062348"/>
+		<item value="org.eclipse.tm.terminal.view.feature:11.5.0.202312281935"/>
 		<item value="org.eclipse.userstorage:1.2.0.v20210517-0327"/>
 		<item value="org.eclipse.wst.common.fproj:3.7.4.v202308161955"/>
 		<item value="org.eclipse.wst.json_ui.feature:1.1.11.v202308160419"/>
