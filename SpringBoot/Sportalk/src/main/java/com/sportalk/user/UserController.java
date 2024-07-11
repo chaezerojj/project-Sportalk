@@ -13,6 +13,7 @@ public class UserController {
     public String createUser(@Valid @RequestBody User user) {
         
         return "User created successfully!";
+
     }
 }
 
