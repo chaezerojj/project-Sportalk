@@ -6,8 +6,8 @@ import Footer from "./components/Footer";
 
 import Home from "./pages/home";
 import Board from "./pages/board";
-import Login from "./pages/login/index.js";
-import SignUp from "./pages/signup/index.js";
+import Login from "./pages/login";
+import SignUp from "./pages/signup";
 import MyPage from "./pages/myPage";
 
 function App() {

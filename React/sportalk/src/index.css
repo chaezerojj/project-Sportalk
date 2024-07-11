@@ -49,16 +49,12 @@
 }
 
 body {
-  font-family: 'Pretendard-Regular', 'Pretendard-Medium', 'Pretendard-SemiBold', 'Pretendard-Bold';
-  margin: 0 auto;
-  padding: 0;
-  /* padding: 30px; */
-  /* padding-top: 0px; */
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
