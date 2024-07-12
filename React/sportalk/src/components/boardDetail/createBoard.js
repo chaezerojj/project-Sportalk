@@ -3,17 +3,31 @@
 import React, { useState } from 'react';
 import { Button, Container, Grid, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthProvider';
 
 function CreateBoard() {
+	// const {user}=useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const navigate = useNavigate();
 
+	const user={
+		id:1,
+		nickName:"minion",
+		userName:"권민현",
+		email:"rnjsalsgus06@naver.com",
+		password:"1234",
+		userId:"jess06"
+	}
+
   const handleSubmit = async () => {
+		const currentDate=new Date().toISOString().split('T')[0]
     const newPost = {
-      title: title,
-      content: content,
-      nickname: "사용자 닉네임" // 실제 사용자 닉네임을 받아오는 방법에 따라 수정
+      title:title,
+      content:content,
+			regDate:currentDate,
+      nickname:user.nickName,
+			user:user
     };
 
     const response = await fetch("/api/sportalk/board/create", {
@@ -21,7 +35,7 @@ function CreateBoard() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newPost),
+      body: JSON.stringify(newPost)
     });
 
     if (response.ok) {
