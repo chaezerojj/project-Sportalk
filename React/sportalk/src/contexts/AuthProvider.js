@@ -5,16 +5,24 @@ import AuthContext from './AuthContext';
 const AuthProvider = ({children}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userId, setUserId] = useState(null);
-	
-  const login = (id) => {
-    setIsLoggedIn(true);
-    setUserId(id);
-  }
 
-  const logout = (id) => {
+	const user={
+		id:1,
+		nickName:"minion",
+		userName:"권민현",
+		email:"rnjsalsgus06@naver.com",
+		password:"1234",
+		userId:"jess06"
+	}
+
+  const login = (id) => {
+		setIsLoggedIn(true)
+	};
+  const logout = () => {
     setIsLoggedIn(false);
     setUserId(null);
   }
+	
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, userId, login, logout }}>
