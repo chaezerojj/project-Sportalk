@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import axiosInstance from '../../api';
+import { useAuth } from '../../contexts/AuthProvider';
 
 function Index() {
   const [form, setForm] = useState({
@@ -9,7 +10,7 @@ function Index() {
     password: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
-
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -34,6 +35,7 @@ function Index() {
       if (response.status === 200) {
         console.log('로그인 성공!');
         alert('로그인 성공!');
+        login(form.userId); // AuthProvider의 login 함수 호출
         navigate('/');
       } else {
         console.error('로그인 실패:', response.data);
