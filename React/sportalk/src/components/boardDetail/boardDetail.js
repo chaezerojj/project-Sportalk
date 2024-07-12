@@ -1,43 +1,97 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {Box,Container,Typography } from '@mui/material';
+import React,{useEffect, useState} from 'react';
+import {useNavigate,useParams} from 'react-router-dom';
+import LikePosts from './likePosts';
+import {useAuth} from '../../contexts/AuthProvider';
+import ModalComponent from './modal';
 
 function BoardDetailPage() {
-  const { id } = useParams();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  const {id} = useParams()
+  const [post,setPost] = useState(null)
+	const {isLoggedIn}=useAuth()
+	const [open,setOpen]=useState(false)
+	const navigate = useNavigate();
+	
+	// 전체 게시글 가져오기
+   useEffect(() => {
     const fetchPostById = () => {
       fetch(`/api/sportalk/board/${id}`)
         .then(res => res.json())
         .then(data => {
-          setPost(data);
-          setLoading(false);
+          setPost(data)
         })
         .catch(err => {
           console.error('Error fetching post:', err);
-          setLoading(false);
         });
     };
 
     fetchPostById();
   }, [id]);
-
-  if (loading) {
-    return <div>Loading...</div>; // 데이터 로딩 중일 때 표시
-  }
-
-  if (!post) {
-    return <div>No data found.</div>; // 데이터가 없을 때 표시
-  }
+	
+	// 좋아요 클릭 이벤트
+	const handleLikeClick=()=>{
+		if(isLoggedIn){
+			fetch(`/api/sportalk/board/${id}/like`,{
+				method:"Post",
+				headers:{
+					"content-Type":"application/json"
+				},
+				body:JSON.stringify({postId:id})
+			})
+			.then(res=>res.json())
+			.then(data=>{
+				setPost(prevPost=>({
+					...prevPost,
+					like:data.like
+				}))
+			})
+			.catch(err=>console.error(err))
+		}
+		else{
+			setOpen(true)
+		}
+	}
+	const handleClose=()=>{
+		setOpen(false)
+	}
+	const handleLoginRedirect=()=>{
+		setOpen(false)
+		navigate("/sportalk/login")
+	}
 
   return (
-    <div>
-      <h3>제목 : {post.title}</h3>
-      <h3>작성자 : {post.nickName}</h3>
-      <h3>작성일자 : {post.regDate}</h3>
-      <h3>내용 : {post.content}</h3>
-    </div>
+    <Container>
+      <Box my={4}>
+				<Box display="flex" justifyContent="space-between" alignItems="center">
+					<Typography variant="h4" gutterBottom>
+						{post && post.title}
+					</Typography>
+					<Typography variant="subtitle1" style={{fontSize:"0.8rem"}}>
+						작성일자: {post && post.regDate}
+					</Typography>
+				</Box>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="subtitle1" style={{ fontSize:"0.8rem"}}>
+            작성자: {post && post.nickName}
+          </Typography>
+          <Typography variant="subtitle1" style={{ fontSize:"0.8rem"}}>
+            💗좋아요 {post && post.like} | 💬댓글 {post && post.commentCount}
+          </Typography>
+        </Box>
+        <Typography variant="body1" paragraph style={{marginTop:"50px"}}>
+          {post && post.content}
+        </Typography>
+
+				<LikePosts postId={id} handleLikeClick={handleLikeClick}likeCount={post && post.like}/>
+      </Box>
+
+			{/* modal */}
+			<ModalComponent
+				open={open}
+				handleClose={handleClose}
+				handleLoginRedirect={handleLoginRedirect}
+			/>
+    </Container>
   );
 }
 
