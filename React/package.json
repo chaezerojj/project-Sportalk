@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "cors": "^2.8.5"
-  },
-  "devDependencies": {
-    "http-proxy-middleware": "^3.0.0"
-  }
-}
