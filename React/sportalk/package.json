@@ -44,13 +44,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:8080",
-      "changeOrigin": true,
-      "secure": false
-    }
-  },
+  "proxy": "http://localhost:8080",
+
   "devDependencies": {
     "http-proxy-middleware": "^3.0.0"
   }
