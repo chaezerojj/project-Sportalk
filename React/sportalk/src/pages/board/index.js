@@ -18,7 +18,7 @@ export default function Index() {
 		fetch("/api/sportalk/board")
 			.then(res=>res.json())
 			.then(data=>{
-				data.sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
+				data.sort((a, b) => new Date(b.regDate) - new Date(a.regDate))
 				setPosts(data)
 				setFilteredPosts(data)
 			})
