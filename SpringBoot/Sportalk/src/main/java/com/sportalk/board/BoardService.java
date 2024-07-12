@@ -34,5 +34,16 @@ public class BoardService {
 	public Board updateBoard(Board board) {
 		return boardRepository.save(board);
 	}
-
+	// 좋아요 메서드
+	public Board likePost(Long id) {
+		Optional<Board> optionalBoard=boardRepository.findById(id);
+		if(optionalBoard.isPresent()) {
+			Board board=optionalBoard.get();
+			board.setLike(board.getLike()+1);
+			return boardRepository.save(board);
+		}
+		else {
+			return null;
+		}
+	}
 }

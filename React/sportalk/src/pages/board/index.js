@@ -1,13 +1,13 @@
 // 게시판 페이지
 import React, { useEffect, useState } from 'react'
 import * as S from './index.Style';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {Button,Grid,Table,TableBody,TableCell,TableHead,TableRow} from '@mui/material';
 import PaginationCustom from './pagination';
 import SearchBar from './searchBar';
 import Sort from './sort';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-
-
+import {useNavigate} from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthProvider';
+import ModalComponent from '../../components/boardDetail/modal';
 
 export default function Index() {
 
@@ -18,6 +18,7 @@ export default function Index() {
 		fetch("/api/sportalk/board")
 			.then(res=>res.json())
 			.then(data=>{
+				data.sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
 				setPosts(data)
 				setFilteredPosts(data)
 			})
@@ -57,6 +58,7 @@ export default function Index() {
 
 	// 정렬
 	const [sortType,setSortType]=useState("latest")
+
 	useEffect(()=>{
 		handleSortPosts(sortType)
 	},[sortType])
@@ -78,17 +80,40 @@ export default function Index() {
 		}
 		setFilteredPosts(sorted)
 	}
+
 	const handleSortChange=(type)=>{
 		setSortType(type)
 		setCurrentPage(1)
+		
 	}
-	// 상세페이지로 이동
 
+	// 상세페이지로 이동
 	const navigate=useNavigate();
 
-	const goToDetailPage = postId => {
-    navigate(`/sportalk/board/${postId}`);
+	const goToDetailPage=postId=>{
+    navigate(`/sportalk/board/${postId}`)
   }
+
+	// 작성하기 페이지
+	const {isLoggedIn}=useAuth()
+	const [open,setOpen]=useState(false)
+
+	const handleLoginRedirect=()=>{
+		setOpen(false)
+		navigate("/sportalk/login")
+	}
+
+	const handleOpen=()=>{
+		if(!isLoggedIn){
+			setOpen(true)
+		}
+		else{
+			navigate("/sportalk/board/create")
+		}
+	}
+	const handleClose=()=>{
+		setOpen(false)
+	}
   return (
 
     <S.Wrapper>
@@ -116,7 +141,7 @@ export default function Index() {
               <TableCell align="left">
 							<button
                     onClick={() => goToDetailPage(post.id)}
-                    style={{ textDecoration: "none", color: "inherit", background: "none", border: "none", cursor: "pointer" }}
+                    style={{textDecoration:"none", color:"inherit", background:"none", border:"none", cursor:"pointer" }}
                   >
                     {post.title}
               </button>
@@ -129,16 +154,23 @@ export default function Index() {
           ))}
         </TableBody>
 				</Table>
+				<Grid container justifyContent="flex-end">
+					<Button variant="contained" color="primary" onClick={handleOpen} style={{marginTop:"20px"}}>
+					작성하기
+					</Button>
+				</Grid>
 				<PaginationCustom
 					currentPage={currentPage}
 					totalPages={totalPages}
 					onPageChange={handlePageChange}
 				/>
-			<div className="buttonWrap">
-				<Button>작성하기</Button>
-			</div>
 			</S.TableContainer>
-			
+			{/* modal */}
+			<ModalComponent
+				open={open}
+				handleClose={handleClose}
+				handleLoginRedirect={handleLoginRedirect}
+			/>
     </S.Wrapper>
 		
   )
