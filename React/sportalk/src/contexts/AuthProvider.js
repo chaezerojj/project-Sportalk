@@ -4,6 +4,7 @@ import AuthContext from './AuthContext';
 // 인증상태를 관리하는 context 제공 - 인증에 관련된 데이터 변경 가능함
 const AuthProvider = ({children}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userId, setUserId] = useState(null);
 
 	const user={
 		id:1,
@@ -14,14 +15,17 @@ const AuthProvider = ({children}) => {
 		userId:"jess06"
 	}
 
-  const login = () => {
+  const login = (id) => {
 		setIsLoggedIn(true)
 	};
-  const logout = () => setIsLoggedIn(false);
+  const logout = () => {
+    setIsLoggedIn(false);
+    setUserId(null);
+  }
 	
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userId, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
