@@ -12,7 +12,6 @@ function BoardDetailPage() {
 	const [open,setOpen]=useState(false)
 	const navigate = useNavigate();
 	
-	// 전체 게시글 가져오기
    useEffect(() => {
     const fetchPostById = () => {
       fetch(`/api/sportalk/board/${id}`)
@@ -45,7 +44,7 @@ function BoardDetailPage() {
 					like:data.like
 				}))
 			})
-			.catch(err=>console.error(err))
+			.catch(err=>console.error("좋아요 안댐"))
 		}
 		else{
 			setOpen(true)
