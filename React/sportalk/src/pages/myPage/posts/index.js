@@ -37,12 +37,21 @@ export default function Index() {
         </S.TextTitle>
         <S.ListWrapper>
           <S.List>
+            <S.Table>
+              <S.Thead>
+              <tr>
+                <S.ThTitle>제목</S.ThTitle>
+              </tr>
+              </S.Thead>
+              <S.Tbody>
             {posts.map(post => (
-              <div key={post.id}>
-                {post.title}
-                {post.content}
-              </div>
+              <tr key={post.id} data-id={post.id} onClick={handleRowClick}>
+                <S.TdTitle>{post.title}</S.TdTitle>
+                {/* {post.content} */}
+              </tr>
             ))}
+              </S.Tbody>
+            </S.Table>
           </S.List>
         </S.ListWrapper>
       </S.PostList>
