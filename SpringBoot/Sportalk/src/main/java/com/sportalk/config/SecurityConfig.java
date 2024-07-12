@@ -8,8 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -20,7 +18,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .requestMatchers("/", "/api/sportalk/*","/api/auth/**").permitAll() // 로그인 API는 인증 없이 접근 가능
+                .requestMatchers("/", "/api/sportalk/**","/api/auth/**").permitAll() // 로그인 API는 인증 없이 접근 가능
                 .anyRequest().authenticated() // 그 외 요청은 인증 필요
                 .and()
             .formLogin().disable()
@@ -36,6 +34,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true) // 세션 무효화
                 .deleteCookies("JSESSIONID"); // 세션 쿠키 삭제
+        http.csrf().disable();
 
         return http.build();
     }
