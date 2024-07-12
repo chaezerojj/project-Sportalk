@@ -44,7 +44,7 @@ function BoardDetailPage() {
 					like:data.like
 				}))
 			})
-			.catch(err=>console.error("좋아요 안댐"))
+			.catch(err=>console.error(err))
 		}
 		else{
 			setOpen(true)
