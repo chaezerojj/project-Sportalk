@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Signup.css';
+import axios from 'axios';
 
-function Index() {
+function Signup() {
   const [form, setForm] = useState({
     userId: '',
     password: '',
     confirmPassword: '',
     nickName: '',
     name: '',
-    phoneNumber: '',
     email: '',
-    birthYear: '',
-    birthMonth: '',
-    birthDay: '',
     emailDomain: '@naver.com',
   });
 
-  
   const [errors, setErrors] = useState({
     userId: '',
     nickName: '',
@@ -29,20 +25,21 @@ function Index() {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
+    // 유효성 검사
     if (name === 'userId' && value.length < 6) {
-      setErrors({ ...errors, userId: '' });
+      setErrors({ ...errors, userId: '아이디는 6자 이상이어야 합니다.' });
     } else {
       setErrors({ ...errors, userId: '' });
     }
 
     if (name === 'nickName' && value.length < 2) {
-      setErrors({ ...errors, nickName: '' });
+      setErrors({ ...errors, nickName: '닉네임은 2자 이상이어야 합니다.' });
     } else {
       setErrors({ ...errors, nickName: '' });
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       form.userId.trim() === '' ||
@@ -50,11 +47,7 @@ function Index() {
       form.confirmPassword.trim() === '' ||
       form.nickName.trim() === '' ||
       form.name.trim() === '' ||
-      form.phoneNumber.trim() === '' ||
-      form.email.trim() === '' ||
-      form.birthYear.trim() === '' ||
-      form.birthMonth.trim() === '' ||
-      form.birthDay.trim() === ''
+      form.email.trim() === ''
     ) {
       alert('빈 칸을 모두 작성해주세요');
       return;
@@ -64,69 +57,59 @@ function Index() {
       return;
     }
 
-    console.log(form);
-    alert('회원가입되었습니다');
-    navigate('/sportalk/login');
+    try {
+      const response = await axios.post('http://localhost:8080/api/auth/signup', {
+        userId: form.userId,
+        password: form.password,
+        nickName: form.nickName,
+        name: form.name,
+        email: `${form.email}${form.emailDomain}`,
+      });
+      console.log('회원가입 성공:', response.data);
+      alert('회원가입 되었습니다');
+      // 회원가입 성공 후 로그인 페이지로 이동
+      navigate('/sportalk/login');
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+      alert('회원가입에 실패했습니다.');
+    }
   };
 
   const handleCancel = () => {
-    alert('취소되었습니다');
+    alert('회원가입이 취소되었습니다');
     navigate('/');
   };
 
-  const handleCheckDuplicate = (field) => {
+  const handleCheckDuplicate = async (field) => {
     let value = form[field].trim();
     if (value === '') {
       alert(`${field === 'userId' ? '아이디' : '닉네임'}를 입력해주세요`);
       return;
     }
-    if (field === 'userId' && value.length < 6) {
-      alert('아이디는 6자 이상이어야 합니다');
-      return;
-    }
-    if (field === 'nickName' && value.length < 2) {
-      alert('닉네임은 2자 이상이어야 합니다');
+    if ((field === 'userId' && value.length < 6) || (field === 'nickName' && value.length < 2)) {
+      alert(`${field === 'userId' ? '아이디는 6자 이상' : '닉네임은 2자 이상'}이어야 합니다.`);
       return;
     }
 
-    console.log(`'${value}'를 확인 중입니다...`);
-    const isDuplicate = false; // 여기에 중복 확인 로직을 추가합니다.
-
-    if (isDuplicate) {
-      alert(`'${value}'는 이미 사용 중입니다. 다른 ${field === 'userId' ? '아이디' : '닉네임'}를 입력해주세요.`);
-    } else {
-      alert(`'${value}'는 사용 가능한 ${field === 'userId' ? '아이디' : '닉네임'}입니다.`);
-    }
+    // 중복 확인 API 호출 (필요시 추가 구현)
+    // try {
+    //   const response = await axiosInstance.get(
+    //     `/api/auth/checkduplicate?field=${field}&value=${value}`,
+    //     {
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     }
+    //   );
+    //   const message = response.data;
+    //   alert(message); // 백엔드 메시지
+    // } catch (error) {
+    //   console.error('중복 확인 요청 실패:', error);
+    //   alert('중복 확인 요청에 실패했습니다.');
+    // }
   };
 
   const emailDomains = ['@naver.com', '@gmail.com', '@daum.net', '@hanmail.net', '@yahoo.com'];
-
-  const birthYearOptions = [];
-  for (let year = 1950; year <= 2010; year++) {
-    birthYearOptions.push(
-      <option key={year} value={year}>
-        {year}년
-      </option>
-    );
-  }
-
-  const birthMonthOptions = [];
-  for (let month = 1; month <= 12; month++) {
-    birthMonthOptions.push(
-      <option key={month} value={month}>
-        {month}월
-      </option>
-    );
-  }
-
-  const birthDayOptions = [];
-  for (let day = 1; day <= 31; day++) {
-    birthDayOptions.push(
-      <option key={day} value={day}>
-        {day}일
-      </option>
-    );
-  }
 
   return (
     <div className="signup-container">
@@ -208,23 +191,6 @@ function Index() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="phoneNumber">전화번호</label>
-          <input
-            type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={form.phoneNumber}
-            onChange={handleChange}
-            placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)"
-            maxLength={11} // 전화번호 입력 길이를 제한합니다.
-          />
-          {form.phoneNumber.length > 0 && form.phoneNumber.length < 11 && (
-            <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>
-              전화번호는 11자입니다.
-            </p>
-          )}
-        </div>
-        <div className="form-group">
           <label htmlFor="email">이메일 주소</label>
           <div className="email-input">
             <input
@@ -244,23 +210,6 @@ function Index() {
             </select>
           </div>
         </div>
-        <div className="form-group">
-          <label>생년월일</label>
-          <div className="birthdate-input">
-            <select name="birthYear" value={form.birthYear} onChange={handleChange}>
-              <option value="">년도</option>
-              {birthYearOptions}
-            </select>
-            <select name="birthMonth" value={form.birthMonth} onChange={handleChange}>
-              <option value="">월</option>
-              {birthMonthOptions}
-            </select>
-            <select name="birthDay" value={form.birthDay} onChange={handleChange}>
-              <option value="">일</option>
-              {birthDayOptions}
-            </select>
-          </div>
-        </div>
         <div className="button-group">
           <button type="submit">가입하기</button>
           <button type="button" onClick={handleCancel}>가입취소</button>
@@ -270,4 +219,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default Signup;
