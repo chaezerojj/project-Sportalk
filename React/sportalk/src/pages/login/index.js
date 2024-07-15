@@ -36,7 +36,7 @@ function Index() {
         console.log('로그인 성공!');
         alert('로그인 성공!');
         login(form.userId); // AuthProvider의 login 함수 호출
-        navigate('/');
+        navigate('/sportalk');
       } else {
         console.error('로그인 실패:', response.data);
         alert('로그인에 실패했습니다.');

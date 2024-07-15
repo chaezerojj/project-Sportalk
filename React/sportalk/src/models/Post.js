@@ -1,31 +1,39 @@
 const { Sequelize, DataTypes } = require('sequelize');
+
+// Sequelize 인스턴스 생성 및 데이터베이스 연결 설정
 const sequelize = new Sequelize('database', 'username', 'password', {
   host: 'localhost',
   dialect: 'mysql',
 });
 
-// 사용자 모델 정의
-const User = sequelize.define('User', {
-  userId: {
+// Post 모델 정의
+const Post = sequelize.define('Post', {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true, // userId는 고유
   },
-  password: {
-    type: DataTypes.STRING,
+  content: {
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   nickName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  userName: {
-    type: DataTypes.STRING,
+  regDate: {
+    type: DataTypes.DATE,
     allowNull: false,
+    defaultValue: DataTypes.NOW,
   },
-  email: {
-    type: DataTypes.STRING,
+  like: {
+    type: DataTypes.INTEGER,
     allowNull: false,
+    defaultValue: 0,
+  },
+  commentCount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
   },
 });
 
@@ -38,4 +46,4 @@ sequelize.sync()
     console.error("MySQL 동기화 오류: ", err);
   });
 
-module.exports = User;
+module.exports = Post;

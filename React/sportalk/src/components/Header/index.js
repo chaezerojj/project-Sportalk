@@ -12,7 +12,7 @@ export default function Index() {
     <S.Header>
       <S.Wrapper>
         <S.Logo>
-          <Link to="/">
+          <Link to="/sportalk">
             <h2>Sportalk</h2>
           </Link>
         </S.Logo>
