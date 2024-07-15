@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sportalk.comment.Comment;
 import com.sportalk.user.User;
 
@@ -26,7 +27,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = {"user"})
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,6 +44,7 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore // 무한 참조 방지
     private User user;
     
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)

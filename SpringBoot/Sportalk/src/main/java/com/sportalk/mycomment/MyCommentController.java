@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sportalk.comment.Comment;
 
 @RestController
-@RequestMapping("/api/mycomments")
+@RequestMapping("/api/sportalk/mypage/mycomments")
 public class MyCommentController {
 	
 	@Autowired

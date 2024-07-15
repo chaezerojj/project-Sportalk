@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Signup.css';
-import axios from 'axios';
+import axiosInstance from '../../api';
 
 function Signup() {
   const [form, setForm] = useState({
@@ -58,7 +58,7 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/api/auth/signup', {
+      const response = await axiosInstance.post('/api/auth/signup', {
         userId: form.userId,
         password: form.password,
         nickName: form.nickName,
@@ -90,23 +90,6 @@ function Signup() {
       alert(`${field === 'userId' ? '아이디는 6자 이상' : '닉네임은 2자 이상'}이어야 합니다.`);
       return;
     }
-
-    // 중복 확인 API 호출 (필요시 추가 구현)
-    // try {
-    //   const response = await axiosInstance.get(
-    //     `/api/auth/checkduplicate?field=${field}&value=${value}`,
-    //     {
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     }
-    //   );
-    //   const message = response.data;
-    //   alert(message); // 백엔드 메시지
-    // } catch (error) {
-    //   console.error('중복 확인 요청 실패:', error);
-    //   alert('중복 확인 요청에 실패했습니다.');
-    // }
   };
 
   const emailDomains = ['@naver.com', '@gmail.com', '@daum.net', '@hanmail.net', '@yahoo.com'];
