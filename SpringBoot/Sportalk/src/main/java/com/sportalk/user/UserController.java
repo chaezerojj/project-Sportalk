@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
@@ -34,7 +35,6 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
             List<User> users = userService.findAllUsers();
@@ -46,7 +46,6 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<String> signUp(@Valid @RequestBody User user) {
         logger.debug("SignUp Request: {}", user);
         if (userService.isUserExists(user.getUserId())) {
@@ -65,7 +64,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam  String userId, @RequestParam String password, HttpSession session) {
+    public ResponseEntity<String> login(@RequestParam String userId, @RequestParam String password, HttpSession session) {
         logger.debug("Login Request: {}", userId);
 
         try {
@@ -86,14 +85,12 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
         return ResponseEntity.ok("로그아웃 성공");
     }
 
     @DeleteMapping("/users/{id}")
-    @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         try {
             Optional<User> userOptional = userRepository.findById(id);
