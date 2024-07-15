@@ -58,7 +58,7 @@ class UserControllerTest {
         User user = new User();
         user.setUserName(username);
 
-        Mockito.when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
+        Mockito.when(userRepository.findByUserName(username)).thenReturn(Optional.of(user));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/{username}", username)
                 .contentType(MediaType.APPLICATION_JSON))
