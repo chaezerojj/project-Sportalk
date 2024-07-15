@@ -1,6 +1,7 @@
 package com.sportalk.user;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,4 +42,10 @@ public class UserService {
 	public boolean checkPassword(User user, String rawPassword) {
 		return passwordEncoder.matches(rawPassword, user.getPassword());
 	}
+	
+	public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
+	
 }

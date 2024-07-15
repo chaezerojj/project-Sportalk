@@ -13,7 +13,8 @@ export default function Index() {
 
 	const [posts,setPosts] = useState([])
 	const [filteredPosts,setFilteredPosts]=useState([])
-
+	const {userId}=useAuth();
+	console.log(userId)
 	const fetchPosts=()=>{
 		fetch("/api/sportalk/board")
 			.then(res=>res.json())
@@ -97,7 +98,7 @@ export default function Index() {
 	// 작성하기 페이지
 	const {isLoggedIn}=useAuth()
 	const [open,setOpen]=useState(false)
-
+	
 	const handleLoginRedirect=()=>{
 		setOpen(false)
 		navigate("/sportalk/login")

@@ -21,12 +21,10 @@ import jakarta.persistence.PostPersist;
 import jakarta.persistence.PostUpdate;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
-@ToString
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +42,20 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", nickName='" + nickName + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", regDate=" + regDate +
+                ", like=" + like +
+                ", commentCount=" + commentCount +
+                ", user=" + (user != null ? user.getId() : "null") + // 사용자 id 출력
+                '}';
+    }
     
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;

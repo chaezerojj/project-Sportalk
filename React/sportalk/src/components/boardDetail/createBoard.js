@@ -1,16 +1,15 @@
-// components/CreateBoard.js
-
 import React, { useState } from 'react';
 import { Button, Container, Grid, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { useAuth } from '../../contexts/AuthProvider';
 
 function CreateBoard() {
-	const {user}=useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+	const {userId}=useAuth();
   const navigate = useNavigate();
-	const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
     const currentDate = new Date().toISOString().split('T')[0];
@@ -19,23 +18,14 @@ function CreateBoard() {
       title: title,
       content: content,
       regDate: currentDate,
-      nickName: user.nickName, // 사용자의 닉네임 사용
-     	Id: user.id // 사용자의 식별자 사용
+			user:{userId}
     };
-		console.log(user.id)
+		
     try {
-      setIsSubmitting(true); // 폼 제출 중임을 표시
-      const response = await fetch("/api/sportalk/board/create", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newPost),
-      });
+      setIsSubmitting(true);
+      const response = await axios.post('/api/sportalk/board/create', newPost);
 
-      if (response.ok) {
-        // 게시물 생성 성공 시 처리할 로직 추가
-        await fetchBoardPosts(); // 게시글 목록을 다시 불러오는 함수 호출
+      if (response.status === 201) {
         navigate('/sportalk/board'); // 생성 후 게시판 페이지로 이동
       } else {
         console.error('게시물 생성 실패');
@@ -43,28 +33,13 @@ function CreateBoard() {
     } catch (error) {
       console.error('게시물 생성 중 오류 발생', error);
     } finally {
-      setIsSubmitting(false); // 폼 제출 완료 후 상태 변경
-    }
-  };
-
-  // 게시글 목록을 다시 불러오는 함수
-  const fetchBoardPosts = async () => {
-    try {
-      const response = await fetch("/api/sportalk/board");
-      if (response.ok) {
-        const data = await response.json();
-        // 게시글 목록을 업데이트하거나 상태 관리 시스템에 반영하는 로직 추가
-      } else {
-        console.error('게시글 목록을 불러오는 데 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('게시글 목록을 불러오는 중 오류가 발생했습니다.', error);
+      setIsSubmitting(false);
     }
   };
 
   return (
     <Container>
-      <h2>작성하기</h2>
+      <h2>게시글 작성하기</h2>
       <TextField
         label="제목"
         fullWidth
@@ -84,11 +59,12 @@ function CreateBoard() {
         variant="outlined"
       />
       <Grid container justifyContent="flex-end">
-        <Button variant="contained" color="primary" onClick={handleSubmit}  disabled={isSubmitting}>
+        <Button variant="contained" color="primary" onClick={handleSubmit} disabled={isSubmitting}>
           작성하기
         </Button>
       </Grid>
     </Container>
   );
 }
-export default CreateBoard
+
+export default CreateBoard;
