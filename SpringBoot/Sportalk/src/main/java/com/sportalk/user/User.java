@@ -26,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString(exclude = {"board", "comments"}) // board 필드를 toString에서 제외
+@ToString(exclude = {"board", "comment"}) // toString에서 제외
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,6 +46,7 @@ public class User implements Serializable {
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[@#$%^&+=!])(?=\\S+$).{10,20}$", message = "비밀번호는 영어, 숫자, 특수기호를 포함해서 10~20자리 이내로 입력해주세요.")
     @Column(nullable = false)
     private String password;
+    private String confirmPassword;
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식을 맞춰주세요.")
