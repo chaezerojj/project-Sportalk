@@ -1,6 +1,5 @@
 package com.sportalk.user;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -38,20 +37,7 @@ public class UserService{
         return userRepository.findByUserId(userId).isPresent();
     }
 
-
-	// 비밀번호 확인(암호화)
-	public boolean checkPassword(User user, String rawPassword) {
-		return passwordEncoder.matches(rawPassword, user.getPassword());
-	}
-	
-	public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
-    }
-
-	
-
-
-    public boolean checkPassword1(User user, String rawPassword) {
+    public boolean checkPassword(User user, String rawPassword) {
         return passwordEncoder.matches(rawPassword, user.getPassword());
     }
 
@@ -68,4 +54,3 @@ public class UserService{
 //        return new CustomUserDetails(user);
 //    }
 }
-
