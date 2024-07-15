@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sportalk.board.Board;
 
 @RestController
-@RequestMapping("/api/myposts")
+@RequestMapping("/api/sportalk/mypage/myposts")
 public class MyPostController {
 	
 	@Autowired

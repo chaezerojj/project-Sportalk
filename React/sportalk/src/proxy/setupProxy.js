@@ -6,8 +6,5 @@ module.exports = function(app) {
     createProxyMiddleware({
     target: 'http://localhost:8000', // 백엔드 서버 주소
     changeOrigin: true,
-    pathRewrite: {
-      '^/api': '' // 요청에서 '/api' 경로 제거하기
-    },
   }));
 };

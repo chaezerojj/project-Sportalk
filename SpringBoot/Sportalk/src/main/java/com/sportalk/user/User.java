@@ -3,6 +3,7 @@ package com.sportalk.user;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sportalk.board.Board;
 import com.sportalk.comment.Comment;
 
@@ -25,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = {"board"}) // board 필드를 toString에서 제외
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,13 +58,9 @@ public class User implements Serializable {
     private String userName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user") // 무한참조를 방지하기 위해 boards 필드를 무시
     private List<Board> boards;
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 }
-
-
-
-
-
