@@ -1,144 +1,249 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Signup.css';
-import axiosInstance from '../../api';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Signup.css";
+import axiosInstance from "../../api";
 
 function Signup() {
   const [form, setForm] = useState({
-    userId: '',
-    password: '',
-    confirmPassword: '',
-    nickName: '',
-    name: '',
-    email: '',
-    emailDomain: '@naver.com',
+    userid: "",
+    password: "",
+    confirmPassword: "",
+    nickname: "",
+    name: "",
+    email: "",
+    emailDomain: "@naver.com",
   });
 
   const [errors, setErrors] = useState({
-    userId: '',
-    nickName: '',
+    userid: "",
+    nickname: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
-    // 유효성 검사
-    if (name === 'userId' && value.length < 6) {
-      setErrors({ ...errors, userId: '아이디는 6자 이상이어야 합니다.' });
-    } else {
-      setErrors({ ...errors, userId: '' });
+    if (name === "userid") {
+      await checkUserIdDuplicate(value);
     }
 
-    if (name === 'nickName' && value.length < 2) {
-      setErrors({ ...errors, nickName: '닉네임은 2자 이상이어야 합니다.' });
+    if (name === "nickname") {
+      await checkNicknameDuplicate(value);
+    }
+
+    if (name === "password") {
+      checkPassword(value);
+    }
+
+    if (name === "confirmPassword") {
+      validateConfirmPassword(value);
+    }
+  };
+
+  const checkUserIdDuplicate = async (userid) => {
+    try {
+      const response = await axiosInstance.get("/api/auth/userid", {
+        params: { userid },
+      });
+      if (response.data) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          userid: "아이디 중복",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          userid: "",
+        }));
+        alert("사용 가능한 아이디입니다.");
+      }
+    } catch (error) {
+      console.error("Error checking userid: ", error);
+    }
+  };
+
+  const checkNicknameDuplicate = async (nickname) => {
+    try {
+      const response = await axiosInstance.get("/api/auth/nickname", {
+        params: { nickname },
+      });
+      if (response.data) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          nickname: "닉네임 중복",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          nickname: "",
+        }));
+        alert("사용 가능한 닉네임입니다.");
+      }
+    } catch (error) {
+      console.error("Error checking nickname: ", error);
+    }
+  };
+
+  const checkPassword = async (password) => {
+    try {
+      const response = await axiosInstance.get("/api/auth/password", {
+        params: { password },
+      });
+      if (!response.data) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "비밀번호는 10자 이상 20자 이하로 입력해주세요.",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "",
+        }));
+      }
+    } catch (error) {
+      console.error("Error checking password: ", error);
+    }
+  };
+
+  const validateConfirmPassword = (confirmPassword) => {
+    if (confirmPassword !== form.password) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "비밀번호가 일치하지 않습니다.",
+      }));
     } else {
-      setErrors({ ...errors, nickName: '' });
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "",
+      }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const {
+      userid,
+      password,
+      confirmPassword,
+      nickname,
+      name,
+      email,
+      emailDomain,
+    } = form;
+
     if (
-      form.userId.trim() === '' ||
-      form.password.trim() === '' ||
-      form.confirmPassword.trim() === '' ||
-      form.nickName.trim() === '' ||
-      form.name.trim() === '' ||
-      form.email.trim() === ''
+      userid.trim() === "" ||
+      password.trim() === "" ||
+      confirmPassword.trim() === "" ||
+      nickname.trim() === "" ||
+      name.trim() === "" ||
+      email.trim() === ""
     ) {
-      alert('빈 칸을 모두 작성해주세요');
+      alert("빈 칸을 모두 작성해주세요");
       return;
     }
-    if (form.password !== form.confirmPassword) {
-      alert('비밀번호가 일치하지 않습니다');
+
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다");
+      return;
+    }
+
+    if (
+      errors.userid !== "" ||
+      errors.nickname !== "" ||
+      errors.password !== "" ||
+      errors.confirmPassword !== ""
+    ) {
+      alert("회원가입 양식을 올바르게 작성해주세요.");
       return;
     }
 
     try {
-      const response = await axiosInstance.post('/api/auth/signup', {
-        userId: form.userId,
-        password: form.password,
-        nickName: form.nickName,
-        name: form.name,
-        email: `${form.email}${form.emailDomain}`,
+      const response = await axiosInstance.post("/api/auth/signup", {
+        userid,
+        password,
+        nickname,
+        name,
+        email: `${email}${emailDomain}`,
       });
-      console.log('회원가입 성공:', response.data);
-      alert('회원가입 되었습니다');
-      // 회원가입 성공 후 로그인 페이지로 이동
-      navigate('/sportalk/login');
+      console.log("회원가입 성공:", response.data);
+      alert("회원가입 되었습니다");
+      navigate("/sportalk/login");
     } catch (error) {
-      console.error('회원가입 실패:', error);
-      alert('회원가입에 실패했습니다.');
+      console.error("회원가입 실패:", error);
+      alert("회원가입에 실패했습니다.");
     }
   };
 
   const handleCancel = () => {
-    alert('회원가입이 취소되었습니다');
-    navigate('/');
+    alert("회원가입이 취소되었습니다");
+    navigate("/");
   };
 
-  const handleCheckDuplicate = async (field) => {
-    let value = form[field].trim();
-    if (value === '') {
-      alert(`${field === 'userId' ? '아이디' : '닉네임'}를 입력해주세요`);
-      return;
-    }
-    if ((field === 'userId' && value.length < 6) || (field === 'nickName' && value.length < 2)) {
-      alert(`${field === 'userId' ? '아이디는 6자 이상' : '닉네임은 2자 이상'}이어야 합니다.`);
-      return;
-    }
-  };
-
-  const emailDomains = ['@naver.com', '@gmail.com', '@daum.net', '@hanmail.net', '@yahoo.com'];
-
+  const emailDomains = [
+    "@naver.com",
+    "@gmail.com",
+    "@daum.net",
+    "@hanmail.net",
+    "@yahoo.com",
+  ];
   return (
     <div className="signup-container">
       <form onSubmit={handleSubmit} className="signup-form">
         <h2>회원가입</h2>
         <div className="form-group">
-          <label htmlFor="userId">아이디</label>
+          <label htmlFor="userid">아이디</label>
           <div className="input-group">
             <input
               type="text"
-              id="userId"
-              name="userId"
-              value={form.userId}
+              id="userid"
+              name="userid"
+              value={form.userid}
               onChange={handleChange}
               placeholder="아이디 입력 (6-12자)"
             />
             <button
               type="button"
               className="check-duplicate"
-              onClick={() => handleCheckDuplicate('userId')}
+              onClick={() => checkUserIdDuplicate(form.userid)}
             >
               중복확인
             </button>
           </div>
-          {errors.userId && <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>{errors.userId}</p>}
+          {errors.userid && (
+            <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
+              {errors.userid}
+            </p>
+          )}
         </div>
         <div className="form-group">
-          <label htmlFor="nickName">닉네임</label>
+          <label htmlFor="nickname">닉네임</label>
           <div className="input-group">
             <input
               type="text"
-              id="nickName"
-              name="nickName"
-              value={form.nickName}
+              id="nickname"
+              name="nickname"
+              value={form.nickname}
               onChange={handleChange}
               placeholder="닉네임 입력 (2-8자)"
             />
             <button
               type="button"
               className="check-duplicate"
-              onClick={() => handleCheckDuplicate('nickName')}
+              onClick={() => checkNicknameDuplicate(form.nickname)}
             >
               중복확인
             </button>
           </div>
-          {errors.nickName && <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>{errors.nickName}</p>}
+          {errors.nickname && (
+            <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
+              {errors.nickname}
+            </p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="password">비밀번호</label>
@@ -150,6 +255,11 @@ function Signup() {
             onChange={handleChange}
             placeholder="비밀번호 입력 (10-20자)"
           />
+          {errors.password && (
+            <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
+              {errors.password}
+            </p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="confirmPassword">비밀번호 확인</label>
@@ -161,6 +271,11 @@ function Signup() {
             onChange={handleChange}
             placeholder="비밀번호 재입력"
           />
+          {errors.confirmPassword && (
+            <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
+              {errors.confirmPassword}
+            </p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="name">이름</label>
@@ -184,7 +299,12 @@ function Signup() {
               onChange={handleChange}
               placeholder="이메일 주소"
             />
-            <select id="emailDomain" name="emailDomain" value={form.emailDomain} onChange={handleChange}>
+            <select
+              id="emailDomain"
+              name="emailDomain"
+              value={form.emailDomain}
+              onChange={handleChange}
+            >
               {emailDomains.map((domain) => (
                 <option key={domain} value={domain}>
                   {domain}
@@ -195,7 +315,9 @@ function Signup() {
         </div>
         <div className="button-group">
           <button type="submit">가입하기</button>
-          <button type="button" onClick={handleCancel}>가입취소</button>
+          <button type="button" onClick={handleCancel}>
+            가입취소
+          </button>
         </div>
       </form>
     </div>

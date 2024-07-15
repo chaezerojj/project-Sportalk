@@ -1,6 +1,5 @@
 package com.sportalk.config;
 
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 
@@ -30,13 +28,9 @@ public class SecurityConfig {
 		http
 		.cors(cors -> cors.configurationSource(corsConfigurationSource))
 		.csrf(csrf -> csrf.disable())
-		.authorizeRequests(authorize -> authorize.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-				.requestMatchers("/api/auth/signup", "/error").permitAll()
-				.requestMatchers("/api/auth/login").permitAll()
-				.requestMatchers("/api/auth/user/**").authenticated()
-				.requestMatchers("/api/auth/loggedin").authenticated()
-				.requestMatchers("/api/auth/logout").authenticated()
-				.requestMatchers("/api/auth/loggedout").authenticated()
+		.authorizeRequests(request -> request
+				.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+				.requestMatchers("/api/auth/**", "/error").permitAll()
 				.requestMatchers("/api/sportalk/board").permitAll()
 				.requestMatchers("/api/sportalk/board/**").authenticated()
 				.anyRequest().permitAll()
