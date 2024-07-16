@@ -1,10 +1,20 @@
-# project-Sportalk
-## 코리아 IT 아카데미 - 정보처리기능사A 1조
+# ⚾project-Sportalk
+### 코리아 IT 아카데미 - 정보처리기능사A 1조
 
-## 1. project
+### 팀원 구성 및 역할
+- 진채영 (@chaezerojj)
+- 권민현 (@rnjsalsgus)
+- 최낙원 (@96paradise)
 
-## 2. project
+### 📌 배포 링크
+- 배포링크 넣기
+  
+### 🌏 개발환경
 
-## 3. project
+### 🔧 협업툴
+  
+## 📃 프로젝트 소개 
 
-## 4. project
+## 🪄상세 기능
+
+## 🗂️ 디렉터리 구조
