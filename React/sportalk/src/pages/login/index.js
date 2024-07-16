@@ -15,8 +15,7 @@ function Index() {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
+  };	
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.userId.trim() === '' || form.password.trim() === '') {
@@ -30,7 +29,7 @@ function Index() {
         userId: form.userId,
         password: form.password,
       });
-      
+			
       // HTTP Status 200 OK 확인
       if (response.status === 200) {
         console.log('로그인 성공!');

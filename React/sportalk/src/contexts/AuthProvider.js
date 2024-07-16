@@ -5,7 +5,7 @@ import axiosInstance from '../api';
 // 인증상태를 관리하는 context 제공 - 인증에 관련된 데이터 변경 가능함
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [userId, setUserId] = useState(1);
+  const [userId, setUserId] = useState(2);
 
   const user = [{
     id: 1,
@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         setIsLoggedIn(true);
         setUserId(response.data.userId); // 백엔드에서 반환하는 사용자 ID로 설정
+				
       } else {
         // 로그인 실패 처리
         console.error('로그인 실패:', response.data);

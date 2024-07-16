@@ -36,9 +36,11 @@ public class SecurityConfig {
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
             .requestMatchers("/api/auth/**").permitAll()
             .requestMatchers("/api/sportalk/**").permitAll()
+            .requestMatchers("/api/**").permitAll()
             .requestMatchers("/error").permitAll()
             .anyRequest().permitAll()
         )
+        
         .formLogin()
             .loginPage("/api/auth/login")
             .loginProcessingUrl("/api/auth/login")

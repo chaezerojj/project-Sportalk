@@ -10,17 +10,16 @@ import DeleteButton from './deleteButton';
 function BoardDetailPage() {
   const {id} = useParams()
   const [post,setPost] = useState(null)
-	const {isLoggedIn}=useAuth()
 	const navigate = useNavigate();
-	const {userId}=useAuth();
-	
+	const { isLoggedIn } = useAuth();
+
    useEffect(() => {
     const fetchPostById = () => {
       fetch(`/api/sportalk/board/${id}`)
         .then(res => res.json())
         .then(data => {
           setPost(data)
-					console.log(data)
+					
         })
         .catch(err => {
           console.error('Error fetching post:', err);
@@ -62,15 +61,15 @@ function BoardDetailPage() {
 		navigate(`/sportalk/board/${id}/edit`)
 	}
 	// 삭제 
-	const handleDelete=()=>{
-		console.log("삭제기능구현")
-		if (window.confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+	const handleDelete = () => {
+    if (window.confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
       fetch(`/api/sportalk/board/${id}`, {
         method: 'DELETE',
       })
         .then((res) => {
           if (res.ok) {
-            navigate('/api/sportalk/board'); 
+            console.log('게시글 삭제 성공');
+            navigate('/sportalk/board'); // 삭제 후 목록 페이지로 이동
           } else {
             throw new Error('게시글 삭제에 실패했습니다.');
           }
@@ -79,7 +78,8 @@ function BoardDetailPage() {
           console.error('Error deleting post:', error);
         });
     }
-	}
+  };
+	console.log()
   return (
     <Container>
       <Box my={4}>
@@ -105,21 +105,11 @@ function BoardDetailPage() {
 
 				<LikePosts postId={id} handleLikeClick={handleLikeClick}likeCount={post && post.like}/>
       </Box>
-			{/* {isAuthor && ( */}
-      {/* <> */}
+			
       <Box display="flex" justifyContent="space-between">
         <EditButton onClick={handleEdit} />
         <DeleteButton onClick={handleDelete} />
       </Box>
-      {/* </> */}
-      {/* )} */}
-
-			{/* modal */}
-			{/* <ModalComponent
-				open={open}
-				handleClose={handleClose}
-				handleLoginRedirect={handleLoginRedirect}
-			/> */}
     </Container>
   );
 }

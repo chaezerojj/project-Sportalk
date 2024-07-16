@@ -14,7 +14,6 @@ function EditBoardPage() {
   const { userId } = useAuth();
 
   useEffect(() => {
-    // 게시글 데이터 불러오기
     fetch(`/api/sportalk/board/${id}`)
       .then(res => res.json())
       .then(data => {
@@ -35,22 +34,24 @@ function EditBoardPage() {
   };
 
   const handleUpdate = () => {
-    const updatedPost = {
-      title: title,
-      content: content,
-    };
+    if (window.confirm('게시글을 수정하시겠습니까?')) {
+      const updatedPost = {
+        title: title,
+        content: content,
+      };
 
-    axios.put(`/api/sportalk/board/${id}`, updatedPost)
-      .then(response => {
-        if (response.status === 200) {
-          navigate(`/sportalk/board/${id}`); 
-        } else {
-          throw new Error('게시글 수정에 실패했습니다.');
-        }
-      })
-      .catch(error => {
-        console.error('Error updating post:', error);
-      });
+      axios.put(`/api/sportalk/board/${id}`, updatedPost)
+        .then(response => {
+          if (response.status === 200) {
+            navigate(`/sportalk/board/${id}`);
+          } else {
+            throw new Error('게시글 수정에 실패했습니다.');
+          }
+        })
+        .catch(error => {
+          console.error('Error updating post:', error);
+        });
+    }
   };
 
   const handleCancel = () => {

@@ -1,6 +1,7 @@
 package com.sportalk.board;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,8 +40,7 @@ public class Board {
     private String nickName; // 닉네임
     private String title; // 게시물 제목
     private String content; // 게시물 본문
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private LocalDate regDate; // 게시물 작성일
+    private LocalDateTime regDate; // 게시물 작성일
     private int like; // 좋아요 수
     private int commentCount; // 댓글 수
 
@@ -63,4 +63,5 @@ public class Board {
             this.nickName = user.getNickName();
         }
     }
+
 }

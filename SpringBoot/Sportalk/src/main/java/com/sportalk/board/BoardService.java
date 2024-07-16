@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,7 +23,7 @@ public class BoardService {
 	public Board createBoard(Board board) {
 		return boardRepository.save(board);
 	}
-
+	@Transactional
 	public void deleteBoard(Long id) {
 		boardRepository.deleteById(id);
 	}

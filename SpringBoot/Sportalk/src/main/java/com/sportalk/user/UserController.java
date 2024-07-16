@@ -38,7 +38,7 @@ public class UserController {
 		this.userRepository = userRepository;
 		this.authenticationManager = authenticationManager;
 	}
-
+	
 	// 회원 전체 조회
 	@GetMapping(value = "/users")
 	public ResponseEntity<List<User>> getAllUsers() {
