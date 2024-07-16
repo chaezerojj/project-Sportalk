@@ -33,7 +33,7 @@ public class SecurityConfig {
         .cors(cors -> cors.configurationSource(corsConfigurationSource))
         .csrf(csrf -> csrf.disable())
         .authorizeRequests(request -> request
-            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+//            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
             .requestMatchers("/api/auth/**").permitAll()
             .requestMatchers("/api/sportalk/**").permitAll()
             .requestMatchers("/error").permitAll()
@@ -42,7 +42,7 @@ public class SecurityConfig {
         .formLogin()
             .loginPage("/api/auth/login")
             .loginProcessingUrl("/api/auth/login")
-            .usernameParameter("userid")
+            .usernameParameter("userId")
             .passwordParameter("password")
             .defaultSuccessUrl("/api/auth/loggedin")
             .successHandler(new CustomAuthenticationSuccessHandler())

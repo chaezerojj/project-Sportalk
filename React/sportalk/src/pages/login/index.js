@@ -29,6 +29,13 @@ function Index() {
       const response = await axiosInstance.post('/api/auth/login', {
         userId: form.userId,
         password: form.password,
+      }, {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          method: 'POST'
+        }, body: JSON.stringify({
+
+        })
       });
       
       // HTTP Status 200 OK 확인
