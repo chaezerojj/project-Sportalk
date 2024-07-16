@@ -57,6 +57,8 @@ const Calendar = () => {
   };
 
   return (
+    <>
+    <h3>* 경기 일정은 추후 업데이트됩니다.</h3>
     <div className="calendar">
       <div className="header">
         <span className="year">{currentYear}년</span>
@@ -83,6 +85,7 @@ const Calendar = () => {
         {renderDays()}
       </div>
     </div>
+    </>
   );
 };
 

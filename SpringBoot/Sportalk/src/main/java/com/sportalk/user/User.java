@@ -26,8 +26,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString(exclude = {"board", "comment"}) // toString에서 제외
+@ToString(exclude = {"boards", "comments"}) // Exclude boards and comments from toString
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -46,7 +47,6 @@ public class User implements Serializable {
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[@#$%^&+=!])(?=\\S+$).{10,20}$", message = "비밀번호는 영어, 숫자, 특수기호를 포함해서 10~20자리 이내로 입력해주세요.")
     @Column(nullable = false)
     private String password;
-    private String confirmPassword;
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식을 맞춰주세요.")
@@ -59,9 +59,9 @@ public class User implements Serializable {
     private String userName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("user") // 무한참조를 방지하기 위해 boards 필드를 무시
+    @JsonIgnoreProperties("user") // Prevent infinite loop by ignoring boards
     private List<Board> boards;
-    
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 }
