@@ -1,9 +1,11 @@
-import {Box,Container,Typography } from '@mui/material';
+import {Box,Button,Container,Typography } from '@mui/material';
 import React,{useEffect, useState} from 'react';
 import {useNavigate,useParams} from 'react-router-dom';
 import LikePosts from './likePosts';
 import {useAuth} from '../../contexts/AuthProvider';
 import ModalComponent from './modal';
+import EditButton from './EditButton';
+import DeleteButton from './deleteButton';
 
 function BoardDetailPage() {
   const {id} = useParams()
@@ -11,13 +13,15 @@ function BoardDetailPage() {
 	const {isLoggedIn}=useAuth()
 	const [open,setOpen]=useState(false)
 	const navigate = useNavigate();
-	
+	const {userId}=useAuth();
+	const [isAuthor,setIsAuthor]=useState(false)
    useEffect(() => {
     const fetchPostById = () => {
       fetch(`/api/sportalk/board/${id}`)
         .then(res => res.json())
         .then(data => {
           setPost(data)
+					setIsAuthor(userId===data.userId)
         })
         .catch(err => {
           console.error('Error fetching post:', err);
@@ -58,6 +62,28 @@ function BoardDetailPage() {
 		navigate("/sportalk/login")
 	}
 
+	const handleEdit=()=>{
+		console.log("수정기능구현")
+	}
+
+	const handleDelete=()=>{
+		console.log("삭제기능구현")
+		if (window.confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+      fetch(`/api/sportalk/board/${id}`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          if (res.ok) {
+            navigate('/api/sportalk/board'); 
+          } else {
+            throw new Error('게시글 삭제에 실패했습니다.');
+          }
+        })
+        .catch((error) => {
+          console.error('Error deleting post:', error);
+        });
+    }
+	}
   return (
     <Container>
       <Box my={4}>
@@ -83,6 +109,12 @@ function BoardDetailPage() {
 
 				<LikePosts postId={id} handleLikeClick={handleLikeClick}likeCount={post && post.like}/>
       </Box>
+			{/* {isAuthor && ( */}
+            {/* <> */}
+              <EditButton onClick={handleEdit} />
+              <DeleteButton onClick={handleDelete} />
+            {/* </> */}
+      {/* )} */}
 
 			{/* modal */}
 			<ModalComponent

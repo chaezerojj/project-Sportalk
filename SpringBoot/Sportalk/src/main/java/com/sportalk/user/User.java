@@ -26,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString(exclude = {"board"}) // board 필드를 toString에서 제외
+@ToString(exclude = {"board", "comments"}) // board 필드를 toString에서 제외
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

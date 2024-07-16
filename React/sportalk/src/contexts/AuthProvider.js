@@ -4,8 +4,8 @@ import axiosInstance from '../api';
 
 // 인증상태를 관리하는 context 제공 - 인증에 관련된 데이터 변경 가능함
 const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userId, setUserId] = useState(1);
 
   const user = [{
     id: 1,

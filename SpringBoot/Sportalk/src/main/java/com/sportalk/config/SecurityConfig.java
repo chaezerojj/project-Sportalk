@@ -1,9 +1,9 @@
 package com.sportalk.config;
 
+import com.sportalk.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,38 +11,27 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.CorsUtils;
-
-import com.sportalk.user.UserService;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
-@Import(CorsConfig.class)
 public class SecurityConfig {
-    
+
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
-
-    private final CorsConfigurationSource corsConfigurationSource;
-
-    public SecurityConfig(CorsConfigurationSource corsConfigurationSource) {
-        this.corsConfigurationSource = corsConfigurationSource;
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests(authorize -> authorize
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .requestMatchers("/api/auth/**", "/error").permitAll()
-                .requestMatchers("/api/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .cors(cors -> cors.configurationSource(corsConfigurationSource))
-            .csrf(csrf -> csrf.disable());
-
-        return http.build();
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 
     @Bean
@@ -50,11 +39,29 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userService);
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        auth.authenticationProvider(authProvider);
-//    }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests(authorize -> authorize
+                .requestMatchers("/api/auth/**", "/error").permitAll()
+                .requestMatchers("/api/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .cors()
+            .and()
+            .csrf().disable();
+
+        return http.build();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
 }

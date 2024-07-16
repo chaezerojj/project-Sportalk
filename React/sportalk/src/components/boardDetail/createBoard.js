@@ -18,7 +18,7 @@ function CreateBoard() {
       title: title,
       content: content,
       regDate: currentDate,
-			user:{userId}
+			user:userId
     };
 		
     try {
