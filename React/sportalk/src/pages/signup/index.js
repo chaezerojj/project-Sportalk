@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Signup.css";
-import axiosInstance from "../../api";
+
+const API_BASE_URL = "http://localhost:8000/api/auth";
 
 function Signup() {
   const [form, setForm] = useState({
@@ -46,7 +48,7 @@ function Signup() {
 
   const checkUserIdDuplicate = async (userid) => {
     try {
-      const response = await axiosInstance.get("/api/auth/userid", {
+      const response = await axios.get(`${API_BASE_URL}/userid`, {
         params: { userid },
       });
       if (response.data) {
@@ -68,7 +70,7 @@ function Signup() {
 
   const checkNicknameDuplicate = async (nickname) => {
     try {
-      const response = await axiosInstance.get("/api/auth/nickname", {
+      const response = await axios.get(`${API_BASE_URL}/nickname`, {
         params: { nickname },
       });
       if (response.data) {
@@ -90,7 +92,7 @@ function Signup() {
 
   const checkPassword = async (password) => {
     try {
-      const response = await axiosInstance.get("/api/auth/password", {
+      const response = await axios.get(`${API_BASE_URL}/password`, {
         params: { password },
       });
       if (!response.data) {
@@ -163,7 +165,7 @@ function Signup() {
     }
 
     try {
-      const response = await axiosInstance.post("/api/auth/signup", {
+      const response = await axios.post(`${API_BASE_URL}/signup`, {
         userid,
         password,
         nickname,
@@ -193,7 +195,7 @@ function Signup() {
   ];
   return (
     <div className="signup-container">
-      <form onSubmit={handleSubmit} className="signup-form">
+      <form onSubmit={handleSubmit} className="signup-form" method="POST">
         <h2>회원가입</h2>
         <div className="form-group">
           <label htmlFor="userid">아이디</label>
