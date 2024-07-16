@@ -7,18 +7,18 @@ const API_BASE_URL = "http://localhost:8000/api/auth";
 
 function Signup() {
   const [form, setForm] = useState({
-    userid: "",
+    userId: "",
     password: "",
     confirmPassword: "",
-    nickname: "",
+    nickName: "",
     name: "",
     email: "",
     emailDomain: "@naver.com",
   });
 
   const [errors, setErrors] = useState({
-    userid: "",
-    nickname: "",
+    userId: "",
+    nickName: "",
     password: "",
     confirmPassword: "",
   });
@@ -29,11 +29,11 @@ function Signup() {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
-    if (name === "userid") {
+    if (name === "userId") {
       await checkUserIdDuplicate(value);
     }
 
-    if (name === "nickname") {
+    if (name === "nickName") {
       await checkNicknameDuplicate(value);
     }
 
@@ -46,10 +46,10 @@ function Signup() {
     }
   };
 
-  const checkUserIdDuplicate = async (userid) => {
+  const checkUserIdDuplicate = async (userId) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/userid`, {
-        params: { userid },
+      const response = await axios.get(`${API_BASE_URL}/userId`, {
+        params: { userId },
       });
       if (response.data) {
         setErrors((prevErrors) => ({
@@ -64,14 +64,14 @@ function Signup() {
         alert("사용 가능한 아이디입니다.");
       }
     } catch (error) {
-      console.error("Error checking userid: ", error);
+      console.error("Error checking userId: ", error);
     }
   };
 
-  const checkNicknameDuplicate = async (nickname) => {
+  const checkNicknameDuplicate = async (nickName) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/nickname`, {
-        params: { nickname },
+      const response = await axios.get(`${API_BASE_URL}/nickName`, {
+        params: { nickName },
       });
       if (response.data) {
         setErrors((prevErrors) => ({
@@ -86,7 +86,7 @@ function Signup() {
         alert("사용 가능한 닉네임입니다.");
       }
     } catch (error) {
-      console.error("Error checking nickname: ", error);
+      console.error("Error checking nickName: ", error);
     }
   };
 
@@ -128,20 +128,20 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const {
-      userid,
+      userId,
       password,
       confirmPassword,
-      nickname,
+      nickName,
       name,
       email,
       emailDomain,
     } = form;
 
     if (
-      userid.trim() === "" ||
+      userId.trim() === "" ||
       password.trim() === "" ||
       confirmPassword.trim() === "" ||
-      nickname.trim() === "" ||
+      nickName.trim() === "" ||
       name.trim() === "" ||
       email.trim() === ""
     ) {
@@ -155,8 +155,8 @@ function Signup() {
     }
 
     if (
-      errors.userid !== "" ||
-      errors.nickname !== "" ||
+      errors.userId !== "" ||
+      errors.nickName !== "" ||
       errors.password !== "" ||
       errors.confirmPassword !== ""
     ) {
@@ -166,11 +166,15 @@ function Signup() {
 
     try {
       const response = await axios.post(`${API_BASE_URL}/signup`, {
-        userid,
+        userId,
         password,
-        nickname,
+        nickName,
         name,
         email: `${email}${emailDomain}`,
+      }, {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
       });
       console.log("회원가입 성공:", response.data);
       alert("회원가입 되었습니다");
@@ -198,52 +202,52 @@ function Signup() {
       <form onSubmit={handleSubmit} className="signup-form" method="POST">
         <h2>회원가입</h2>
         <div className="form-group">
-          <label htmlFor="userid">아이디</label>
+          <label htmlFor="userId">아이디</label>
           <div className="input-group">
             <input
               type="text"
-              id="userid"
-              name="userid"
-              value={form.userid}
+              id="userId"
+              name="userId"
+              value={form.userId}
               onChange={handleChange}
               placeholder="아이디 입력 (6-12자)"
             />
             <button
               type="button"
               className="check-duplicate"
-              onClick={() => checkUserIdDuplicate(form.userid)}
+              onClick={() => checkUserIdDuplicate(form.userId)}
             >
               중복확인
             </button>
           </div>
-          {errors.userid && (
+          {errors.userId && (
             <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
-              {errors.userid}
+              {errors.userId}
             </p>
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="nickname">닉네임</label>
+          <label htmlFor="nickName">닉네임</label>
           <div className="input-group">
             <input
               type="text"
-              id="nickname"
-              name="nickname"
-              value={form.nickname}
+              id="nickName"
+              name="nickName"
+              value={form.nickName}
               onChange={handleChange}
               placeholder="닉네임 입력 (2-8자)"
             />
             <button
               type="button"
               className="check-duplicate"
-              onClick={() => checkNicknameDuplicate(form.nickname)}
+              onClick={() => checkNicknameDuplicate(form.nickName)}
             >
               중복확인
             </button>
           </div>
-          {errors.nickname && (
+          {errors.nickName && (
             <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
-              {errors.nickname}
+              {errors.nickName}
             </p>
           )}
         </div>

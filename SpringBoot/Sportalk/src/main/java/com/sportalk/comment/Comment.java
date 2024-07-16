@@ -35,7 +35,8 @@ public class Comment {
     @Column(nullable = false)
     private String comment; // 댓글 내용
 
-    @Column(nullable = false, unique = true)
+//    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String nickName; // 닉네임
 
     @Column(nullable = false)
