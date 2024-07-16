@@ -11,7 +11,7 @@ import SignUp from "./pages/signup/index.js";
 import MyPage from "./pages/myPage/index.js";
 import BoardDetail from "./components/boardDetail/boardDetail.js";
 import CreateBoard from "./components/boardDetail/createBoard.js";
-
+import EditBoardPage from './components/boardDetail/editBoardPage.js';
 function App() {
 
   return (
@@ -25,6 +25,7 @@ function App() {
             <Route path="/sportalk" element={<Home />}/>
             <Route path="/sportalk/board" element={<Board />} />
             <Route path="/sportalk/board/:id" element={<BoardDetail />} />
+            <Route path="/sportalk/board/:id/edit" element={<EditBoardPage />} />
             <Route path="/sportalk/board/create" element={<CreateBoard/>}/>
             <Route path="/sportalk/login" element={<Login />} />
             <Route path="/sportalk/signup" element={<SignUp />} />

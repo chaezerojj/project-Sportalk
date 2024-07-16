@@ -7,7 +7,6 @@ import SearchBar from './searchBar';
 import Sort from './sort';
 import {useNavigate} from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthProvider';
-import ModalComponent from '../../components/boardDetail/modal';
 
 export default function Index() {
 
@@ -97,24 +96,18 @@ export default function Index() {
 
 	// 작성하기 페이지
 	const {isLoggedIn}=useAuth()
-	const [open,setOpen]=useState(false)
-	
-	const handleLoginRedirect=()=>{
-		setOpen(false)
-		navigate("/sportalk/login")
-	}
 
-	const handleOpen=()=>{
-		if(!isLoggedIn){
-			setOpen(true)
+	const handleOpen = () => {
+		if (!isLoggedIn) {
+			const confirmed = window.confirm("로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?");
+			if (confirmed) {
+				navigate("/sportalk/login");
+			}
+		} else {
+			navigate("/sportalk/board/create");
 		}
-		else{
-			navigate("/sportalk/board/create")
-		}
-	}
-	const handleClose=()=>{
-		setOpen(false)
-	}
+	};
+	
   return (
 
     <S.Wrapper>
@@ -166,12 +159,6 @@ export default function Index() {
 					onPageChange={handlePageChange}
 				/>
 			</S.TableContainer>
-			{/* modal */}
-			<ModalComponent
-				open={open}
-				handleClose={handleClose}
-				handleLoginRedirect={handleLoginRedirect}
-			/>
     </S.Wrapper>
 		
   )

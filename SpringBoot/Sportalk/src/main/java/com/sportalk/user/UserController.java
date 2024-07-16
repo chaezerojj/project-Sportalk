@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -22,18 +25,19 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    public UserController(AuthenticationManager authenticationManager, UserService userService, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
+    public UserController(UserService userService, UserRepository userRepository, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
     }
 
+    // 회원 전체 조회
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         try {
@@ -45,6 +49,7 @@ public class UserController {
         }
     }
 
+    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<String> signUp(@Valid @RequestBody User user) {
         logger.debug("SignUp Request: {}", user);
@@ -63,6 +68,7 @@ public class UserController {
         }
     }
 
+    // 로그인 등록
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String userId, @RequestParam String password, HttpSession session) {
         logger.debug("Login Request: {}", userId);
@@ -83,11 +89,35 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
     }
+    
+    private Map<String, String> createUserInfo(String userId){
+        Map<String, String> userInfo = new HashMap<>();
+        userInfo.put("userId", userId);
+        return userInfo;
+    }
+    
+    // 로그인 성공
+    @GetMapping("/loggedin")
+    public ResponseEntity<Map<String, String>> isLogined() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        System.out.println("로그인한 UserId: " + userId);
+        Map<String, String> userInfo = createUserInfo(userId);
+        return ResponseEntity.ok(userInfo);
+    }
 
+    // 로그아웃
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
         return ResponseEntity.ok("로그아웃 성공");
+    }
+    
+    // 로그아웃 성공 (확인용)
+    @GetMapping("/loggedout")
+    public ResponseEntity<Void> loggedOut(){
+    	System.out.println("로그아웃 됨");
+    	return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/users/{id}")
@@ -96,7 +126,7 @@ public class UserController {
             Optional<User> userOptional = userRepository.findById(id);
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
-                userService.deleteUser(user);
+                userService.deleteUser(user.getUserId());
                 logger.info("사용자 삭제 성공: {}", id);
                 return ResponseEntity.ok("사용자가 성공적으로 삭제되었습니다.");
             } else {
@@ -107,5 +137,47 @@ public class UserController {
             logger.error("사용자 삭제 중 오류 발생", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사용자 삭제 중 오류가 발생했습니다.");
         }
+    }
+    
+    // 마이페이지
+    // 회원정보 수정
+    @PostMapping("/mypage/profile")
+    public ResponseEntity<User> updateUser(@Valid @RequestBody User updatedUser){
+    	System.out.println("회원정보 수정: " + updatedUser);
+    	User user = userService.updateUser(updatedUser);
+    	userService.register(user);
+    	return ResponseEntity.ok().build();
+    }
+    
+    // 유효성 검사들
+    // - userId
+    @GetMapping("/userid")
+    public ResponseEntity<Boolean> existUserId(@RequestParam String userId) {
+    	boolean exists = userService.checkUserId(userId);
+    	return ResponseEntity.ok(exists);
+    }
+    
+    // - nickName
+    @GetMapping("/nickname")
+    public ResponseEntity<Boolean> existNickName(@RequestParam String nickName) {
+    	boolean exists = userService.checkNickName(nickName);
+    	return ResponseEntity.ok(exists);
+    }
+    
+    // - password
+    @GetMapping("/password")
+    public ResponseEntity<Boolean> checkPassword(@RequestParam String password) {
+    	boolean isValid = password.length() >= 10 & password.length() <= 20;
+    	return ResponseEntity.ok(isValid);
+    }
+    
+    
+    //
+    @GetMapping("/user-success")
+    public ResponseEntity<User> getUser() {
+    	System.out.println("유저 인증 success");
+    	String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+    	User user = userService.getUserInfo(userId);
+    	return ResponseEntity.ok(user);
     }
 }
