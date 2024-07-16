@@ -19,7 +19,8 @@ app.post('/api/auth/login', async (req, res) => {
   try {
     const response = await axios.post(`${BACKEND_URL}/api/auth/login`, req.body, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        method: 'POST'
       }
     });
     res.status(response.status).json(response.data);
@@ -37,7 +38,8 @@ app.post('/api/auth/logout', async (req, res) => {
   try {
     const response = await axios.post(`${BACKEND_URL}/api/auth/logout`, req.body, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        method: 'POST'
       }
     });
     res.status(response.status).json(response.data);
