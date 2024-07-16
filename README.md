@@ -26,6 +26,7 @@
 
 ## 🗂️ 디렉터리 구조
 #### React
+```
 src
  ┣ api
  ┃ ┗ index.js
@@ -165,8 +166,10 @@ src
  ┣ reportWebVitals.js
  ┣ setupTests.js
  ┗ 라이브러리.txt
+```
 
 #### SpringBoot
+```
 src
  ┣ main
  ┃ ┣ java
@@ -220,3 +223,4 @@ src
  ┃ ┃ ┃ ┃ ┃ ┗ UserTest.java
  ┃ ┃ ┃ ┃ ┗ SportalkApplicationTest.java
  ┃ ┗ resources
+```
