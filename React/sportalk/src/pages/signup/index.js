@@ -17,7 +17,7 @@ function Index() {
     emailDomain: '@naver.com',
   });
 
-  
+
   const [errors, setErrors] = useState({
     userId: '',
     nickName: '',
@@ -90,7 +90,7 @@ function Index() {
     }
 
     console.log(`'${value}'를 확인 중입니다...`);
-    const isDuplicate = false; // 여기에 중복 확인 로직을 추가합니다.
+    const isDuplicate = false;
 
     if (isDuplicate) {
       alert(`'${value}'는 이미 사용 중입니다. 다른 ${field === 'userId' ? '아이디' : '닉네임'}를 입력해주세요.`);
@@ -216,7 +216,7 @@ function Index() {
             value={form.phoneNumber}
             onChange={handleChange}
             placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)"
-            maxLength={11} // 전화번호 입력 길이를 제한합니다.
+            maxLength={11} 
           />
           {form.phoneNumber.length > 0 && form.phoneNumber.length < 11 && (
             <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>
