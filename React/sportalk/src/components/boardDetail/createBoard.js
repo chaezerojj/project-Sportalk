@@ -1,55 +1,45 @@
-// components/CreateBoard.js
-
 import React, { useState } from 'react';
 import { Button, Container, Grid, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { useAuth } from '../../contexts/AuthProvider';
 
 function CreateBoard() {
-	// const {user}=useAuth();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+	const {user}=useAuth();
   const navigate = useNavigate();
 
-	const user={
-		id:1,
-		nickName:"minion",
-		userName:"권민현",
-		email:"rnjsalsgus06@naver.com",
-		password:"1234",
-		userId:"jess06"
-	}
-
   const handleSubmit = async () => {
-		const currentDate=new Date().toISOString().split('T')[0]
+    const currentDate = new Date().toISOString();
+
     const newPost = {
-      title:title,
-      content:content,
-			regDate:currentDate,
-      nickname:user.nickName,
-			user:user
+      title: title,
+      content: content,
+      regDate: currentDate,
+			nickName: user.nickName
     };
+		
+    try {
+      setIsSubmitting(true);
+      const response = await axios.post('/api/sportalk/board/create', newPost);
 
-    const response = await fetch("/api/sportalk/board/create", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newPost)
-    });
-
-    if (response.ok) {
-      // 게시물 생성 성공 시 처리할 로직 추가
-      navigate('/sportalk/board'); // 생성 후 게시판 페이지로 이동
-    } else {
-      // 게시물 생성 실패 시 처리할 로직 추가
-      console.error('게시물 생성 실패');
+      if (response.status === 201) {
+        navigate('/sportalk/board'); // 생성 후 게시판 페이지로 이동
+      } else {
+        console.error('게시물 생성 실패');
+      }
+    } catch (error) {
+      console.error('게시물 생성 중 오류 발생', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <Container>
-      <h2>작성하기</h2>
+      <h2>게시글 작성하기</h2>
       <TextField
         label="제목"
         fullWidth
@@ -69,11 +59,12 @@ function CreateBoard() {
         variant="outlined"
       />
       <Grid container justifyContent="flex-end">
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button variant="contained" color="primary" onClick={handleSubmit} disabled={isSubmitting}>
           작성하기
         </Button>
       </Grid>
     </Container>
   );
 }
-export default CreateBoard
+
+export default CreateBoard;

@@ -16,9 +16,8 @@ function Index() {
   // Handle input change in form fields
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  };	
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,7 +35,11 @@ function Index() {
         password: form.password,
       });
 
+
       // Check if login was successful (assuming status 200 means success)
+
+			
+      // HTTP Status 200 OK 확인
       if (response.status === 200) {
         console.log('로그인 성공!');
         alert('로그인 성공!');
