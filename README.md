@@ -7,7 +7,7 @@
 ### 🙌 팀원 구성 및 역할
 - 진채영 ([@chaezerojj](https://github.com/chaezerojj))
 - 권민현 ([@rnjsalsgus](https://github.com/rnjsalsgus)
-- 최낙원 ([@96paradise](https://github.com/96paradise)
+- 최낙원 ([@96paradise](https://github.com/96paradise))
   
 ### 🌏 개발환경
 #### Frontend
