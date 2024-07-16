@@ -49,7 +49,7 @@ function Index() {
 
   return (
     <div className="login-container">
-      <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={handleSubmit} className="login-form" method='POST'>
         <h2>로그인</h2>
         <div>
           <label htmlFor="userId">아이디</label>
