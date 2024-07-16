@@ -67,7 +67,8 @@ export const Nav = styled.div`
 `;
 
 export const BoardWrapper = styled.div`
-
+  display: flex;
+  flex-direction: row;
 `;
 
 export const UserNav = styled.div`

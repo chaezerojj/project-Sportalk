@@ -22,6 +22,12 @@ export default function Index() {
             <Link to="/sportalk/board">
               <h3>게시판</h3>
             </Link>
+            <Link to="/sportalk/rank">
+              <h3>랭킹</h3>
+            </Link>
+            <Link to="/sportalk/calendar">
+              <h3>경기일정</h3>
+            </Link>
           </S.BoardWrapper>
 
           <S.UserNav>
