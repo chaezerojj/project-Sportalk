@@ -11,7 +11,12 @@ import SignUp from "./pages/signup/index.js";
 import MyPage from "./pages/myPage/index.js";
 import BoardDetail from "./components/boardDetail/boardDetail.js";
 import CreateBoard from "./components/boardDetail/createBoard.js";
+
 import EditBoardPage from './components/boardDetail/editBoardPage.js';
+import BaseballRank from "./pages/sports/rank/index.js";
+import Calendar from './pages/sports/calendar/index.js';
+
+
 function App() {
 
   return (
@@ -30,6 +35,8 @@ function App() {
             <Route path="/sportalk/login" element={<Login />} />
             <Route path="/sportalk/signup" element={<SignUp />} />
             <Route path="/sportalk/mypage/*" element={<MyPage />} />
+            <Route path="/sportalk/rank" element={<BaseballRank />} />
+            <Route path="/sportalk/calendar" element={<Calendar />} />
           </Routes>
           {/* 푸터 */}
           <Footer />

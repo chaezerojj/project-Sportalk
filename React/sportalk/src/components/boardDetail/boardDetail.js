@@ -1,9 +1,10 @@
-import {Box,Container,Typography } from '@mui/material';
-import React,{useEffect, useState} from 'react';
-import {useNavigate,useParams} from 'react-router-dom';
+// BoardDetailPage.js
+import React, { useEffect, useState } from 'react';
+import { Box, Container, Typography } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
 import LikePosts from './likePosts';
 import {useAuth} from '../../contexts/AuthProvider';
-
+import Comments from '../comment/index';
 import EditButton from './EditButton';
 import DeleteButton from './deleteButton';
 
@@ -11,7 +12,7 @@ function BoardDetailPage() {
   const {id} = useParams()
   const [post,setPost] = useState(null)
 	const navigate = useNavigate();
-	const { isLoggedIn } = useAuth();
+	const { isLoggedIn, user } = useAuth(); // Get user from context
 
    useEffect(() => {
     const fetchPostById = () => {
@@ -83,33 +84,36 @@ function BoardDetailPage() {
   return (
     <Container>
       <Box my={4}>
-				<Box display="flex" justifyContent="space-between" alignItems="center">
-					<Typography variant="h4" gutterBottom>
-						{post && post.title}
-					</Typography>
-					<Typography variant="subtitle1" style={{fontSize:"0.8rem"}}>
-						작성일자: {post && post.regDate}
-					</Typography>
-				</Box>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="subtitle1" style={{ fontSize:"0.8rem"}}>
+          <Typography variant="h4" gutterBottom>
+            {post && post.title}
+          </Typography>
+          <Typography variant="subtitle1" style={{ fontSize: "0.8rem" }}>
+            작성일자: {post && post.regDate}
+          </Typography>
+        </Box>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography variant="subtitle1" style={{ fontSize: "0.8rem" }}>
             작성자: {post && post.nickName}
           </Typography>
-          <Typography variant="subtitle1" style={{ fontSize:"0.8rem"}}>
+          <Typography variant="subtitle1" style={{ fontSize: "0.8rem" }}>
             💗좋아요 {post && post.like} | 💬댓글 {post && post.commentCount}
           </Typography>
         </Box>
-        <Typography variant="body1" paragraph style={{marginTop:"50px"}}>
+        <Typography variant="body1" paragraph style={{ marginTop: "50px" }}>
           {post && post.content}
         </Typography>
 
-				<LikePosts postId={id} handleLikeClick={handleLikeClick}likeCount={post && post.like}/>
+        <LikePosts postId={id} handleLikeClick={handleLikeClick} likeCount={post && post.like} />
+
+
       </Box>
 			
       <Box display="flex" justifyContent="space-between">
         <EditButton onClick={handleEdit} />
         <DeleteButton onClick={handleDelete} />
       </Box>
+      <Comments postId={id} user={user} />
     </Container>
   );
 }

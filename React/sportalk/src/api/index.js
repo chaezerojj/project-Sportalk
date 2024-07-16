@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
   baseURL: "http://localhost:8000", // 프록시 서버
   withCredentials: true, // 크로스 도메인 요청 시 자격 증명 정보(쿠키 등)를 포함
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8',
   }
 });
 
