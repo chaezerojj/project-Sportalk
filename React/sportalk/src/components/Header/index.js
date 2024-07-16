@@ -28,13 +28,16 @@ export default function Index() {
             <Link to="/sportalk/calendar">
               <h3>경기일정</h3>
             </Link>
+            <Link to="/sportalk/team">
+              <h3>팀</h3>
+            </Link>
           </S.BoardWrapper>
 
           <S.UserNav>
             {isLoggedIn ? (
               <>
                 <Link to="/sportalk/mypage">마이페이지</Link>
-                <button onClick={logout}>로그아웃</button>
+                <S.Button onClick={logout}>로그아웃</S.Button>
               </>
             ) : (
               <>

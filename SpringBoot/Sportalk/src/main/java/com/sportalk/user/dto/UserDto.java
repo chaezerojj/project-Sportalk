@@ -1,8 +1,6 @@
 package com.sportalk.user.dto;
 
-import java.security.Timestamp;
-
-import org.hibernate.annotations.CreationTimestamp;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,10 +21,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @NotBlank(message = "아이디를 입력해주세요.")
     @Pattern(regexp = "^[a-zA-Z0-9]{6,12}$", message = "아이디는 영어와 숫자를 포함해서 6~12자리 이내로 입력해주세요.")
     private String userId;
@@ -38,6 +37,7 @@ public class UserDto {
     @NotBlank(message = "비밀번호를 입력해주세요.")
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[@#$%^&+=!])(?=\\S+$).{10,20}$", message = "비밀번호는 영어, 숫자, 특수기호를 포함해서 10~20자리 이내로 입력해주세요.")
     private String password;
+
     private String confirmPassword;
 
     @NotBlank(message = "이메일을 입력해주세요.")
@@ -48,6 +48,7 @@ public class UserDto {
     @Size(min = 2, max = 10, message = "이름을 2~10자 사이로 입력해주세요.")
     private String userName;
     
-    @CreationTimestamp
+    
+
     private Timestamp createDate;
 }
