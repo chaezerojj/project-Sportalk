@@ -34,28 +34,7 @@ src
  ┃ ┗ index.js
  ┣ assets
  ┃ ┣ fonts
- ┃ ┃ ┣ DungGeunMo.woff
- ┃ ┃ ┣ DungGeunMo.woff2
- ┃ ┃ ┣ Pretendard-Black.subset.woff
- ┃ ┃ ┣ Pretendard-Black.subset.woff2
- ┃ ┃ ┣ Pretendard-Bold.subset.woff
- ┃ ┃ ┣ Pretendard-Bold.subset.woff2
- ┃ ┃ ┣ Pretendard-ExtraBold.subset.woff
- ┃ ┃ ┣ Pretendard-ExtraBold.subset.woff2
- ┃ ┃ ┣ Pretendard-ExtraLight.subset.woff
- ┃ ┃ ┣ Pretendard-ExtraLight.subset.woff2
- ┃ ┃ ┣ Pretendard-Light.subset.woff
- ┃ ┃ ┣ Pretendard-Light.subset.woff2
- ┃ ┃ ┣ Pretendard-Medium.subset.woff
- ┃ ┃ ┣ Pretendard-Medium.subset.woff2
- ┃ ┃ ┣ Pretendard-Regular.subset.woff
- ┃ ┃ ┣ Pretendard-Regular.subset.woff2
- ┃ ┃ ┣ Pretendard-SemiBold.subset.woff
- ┃ ┃ ┣ Pretendard-SemiBold.subset.woff2
- ┃ ┃ ┣ Pretendard-Thin.subset.woff
- ┃ ┃ ┗ Pretendard-Thin.subset.woff2
  ┃ ┗ images
- ┃ ┃ ┗ baseball-main.png
  ┣ components
  ┃ ┣ boardDetail
  ┃ ┃ ┣ boardDetail.js
@@ -128,29 +107,7 @@ src
  ┃ ┃ ┃ ┣ baseball.css
  ┃ ┃ ┃ ┗ index.js
  ┃ ┃ ┗ team
- ┃ ┃ ┃ ┣ teamInfo
- ┃ ┃ ┃ ┃ ┣ Doosan.css
- ┃ ┃ ┃ ┃ ┣ Doosan.js
- ┃ ┃ ┃ ┃ ┣ Hanhwa.css
- ┃ ┃ ┃ ┃ ┣ Hanhwa.js
- ┃ ┃ ┃ ┃ ┣ Kia.css
- ┃ ┃ ┃ ┃ ┣ Kia.js
- ┃ ┃ ┃ ┃ ┣ Kiwoom.css
- ┃ ┃ ┃ ┃ ┣ Kiwoom.js
- ┃ ┃ ┃ ┃ ┣ KT.css
- ┃ ┃ ┃ ┃ ┣ KT.js
- ┃ ┃ ┃ ┃ ┣ LG.css
- ┃ ┃ ┃ ┃ ┣ LG.js
- ┃ ┃ ┃ ┃ ┣ Lotte.css
- ┃ ┃ ┃ ┃ ┣ Lotte.js
- ┃ ┃ ┃ ┃ ┣ NC.css
- ┃ ┃ ┃ ┃ ┣ NC.js
- ┃ ┃ ┃ ┃ ┣ Samsung.css
- ┃ ┃ ┃ ┃ ┣ Samsung.js
- ┃ ┃ ┃ ┃ ┣ SSG.css
- ┃ ┃ ┃ ┃ ┗ SSG.js
- ┃ ┃ ┃ ┣ index.js
- ┃ ┃ ┃ ┗ index.Style.js
+ ┃ ┃ ┃ ┗ teamInfo
  ┃ ┗ index.js
  ┣ proxy
  ┃ ┗ setupProxy.js
