@@ -29,10 +29,10 @@ const KT = () => {
           </div>
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/KTst.png`} alt="KT위즈파크" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/KTst.png`} alt="KT위즈파크" className="stadium-image" />
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/slogan8.png`} alt="슬로건" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/slogan8.png`} alt="슬로건" className="stadium-image" />
         </div>
       </section>
       <section className="description">

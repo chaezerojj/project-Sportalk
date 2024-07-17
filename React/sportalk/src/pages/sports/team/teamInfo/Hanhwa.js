@@ -31,10 +31,10 @@ const Hanhwa = () => {
           </div>
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/Hanhwast.png`} alt="한화생명 이글스 파크" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/Hanhwast.png`} alt="한화생명 이글스 파크" className="stadium-image" />
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/slogan9.png`} alt="슬로건" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/slogan9.png`} alt="슬로건" className="stadium-image" />
         </div>
       </section>
       <section className="description">

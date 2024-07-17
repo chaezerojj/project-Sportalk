@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./LG.css";
+import "./Doosan.css";
 
-const LG = () => {
+const Doosan = () => {
   return (
     <div className="stadium-container">
       <header className="main-header">
@@ -44,14 +44,14 @@ const LG = () => {
         </div>
         <div className="center-column">
           <img
-            src={`${process.env.PUBLIC_URL}/LGst.png`}
+            src={`${process.env.PUBLIC_URL}/images/LGst.png`}
             alt="잠실야구장"
             className="stadium-image"
           />
         </div>
         <div className="center-column">
           <img
-            src={`${process.env.PUBLIC_URL}/slogan5.png`}
+            src={`${process.env.PUBLIC_URL}/images/slogan5.png`}
             alt="슬로건"
             className="stadium-image"
           />
@@ -108,4 +108,4 @@ const LG = () => {
   );
 };
 
-export default LG;
+export default Doosan;

@@ -29,10 +29,10 @@ const LG = () => {
           </div>
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/LGst.png`} alt="잠실야구장" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/LGst.png`} alt="잠실야구장" className="stadium-image" />
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/slogan4.png`} alt="슬로건" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/slogan4.png`} alt="슬로건" className="stadium-image" />
         </div>
       </section>
       <section className="description">

@@ -32,10 +32,10 @@ const Kia = () => {
           </div>
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/Kiast.png`} alt="광주기아챔피언스필드" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/Kiast.png`} alt="광주기아챔피언스필드" className="stadium-image" />
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/slogan2.png`} alt="슬로건" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/slogan2.png`} alt="슬로건" className="stadium-image" />
         </div>
       </section>
       <section className="description">
