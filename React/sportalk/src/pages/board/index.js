@@ -26,7 +26,7 @@ export default function Index() {
 	useEffect(()=>{
 		fetchPosts()
 	},[])
-
+	
 	// 페이지네이션
 	const [currentPage, setCurrentPage]=useState(1);
 	const itemsPerPage=10;

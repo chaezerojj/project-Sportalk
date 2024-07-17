@@ -59,28 +59,46 @@ function BoardDetailPage() {
 
   // 수정
   const handleEdit = () => {
-    console.log("수정기능구현");
-    navigate(`/sportalk/board/${id}/edit`);
-  };
+		if (isLoggedIn) {
+			console.log("수정기능구현");
+			navigate(`/sportalk/board/${id}/edit`);
+		} else {
+			const confirmed = window.confirm(
+				"로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?"
+			);
+			if (confirmed) {
+				navigate("/sportalk/login");
+			}
+		}
+	};
   // 삭제
   const handleDelete = () => {
-    if (window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
-      fetch(`/api/sportalk/board/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => {
-          if (res.ok) {
-            console.log("게시글 삭제 성공");
-            navigate("/sportalk/board"); // 삭제 후 목록 페이지로 이동
-          } else {
-            throw new Error("게시글 삭제에 실패했습니다.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error deleting post:", error);
-        });
-    }
-  };
+		if (isLoggedIn) {
+			if (window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+				fetch(`/api/sportalk/board/${id}`, {
+					method: "DELETE",
+				})
+					.then((res) => {
+						if (res.ok) {
+							console.log("게시글 삭제 성공");
+							navigate("/sportalk/board"); // 삭제 후 목록 페이지로 이동
+						} else {
+							throw new Error("게시글 삭제에 실패했습니다.");
+						}
+					})
+					.catch((error) => {
+						console.error("Error deleting post:", error);
+					});
+			}
+		} else {
+			const confirmed = window.confirm(
+				"로그인이 필요합니다. 로그인 페이지로 이동하시겠습니까?"
+			);
+			if (confirmed) {
+				navigate("/sportalk/login");
+			}
+		}
+	};
   console.log();
   return (
     <Container>
