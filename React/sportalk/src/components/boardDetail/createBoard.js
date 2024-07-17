@@ -8,17 +8,17 @@ function CreateBoard() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-	const {user}=useAuth();
+	// const {userId}=useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     const currentDate = new Date().toISOString();
-
+		// console.log(userId.nickName)
     const newPost = {
       title: title,
       content: content,
       regDate: currentDate,
-			nickName: user.nickName
+			// nickName:userId.nickName
     };
 		
     try {
