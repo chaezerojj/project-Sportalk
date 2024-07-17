@@ -31,10 +31,10 @@ const Kiwoom = () => {
           </div>
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/Kiwoomst.png`} alt="사직야구장" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/Kiwoomst.png`} alt="사직야구장" className="stadium-image" />
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/slogan10.png`} alt="슬로건" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/slogan10.png`} alt="슬로건" className="stadium-image" />
         </div>
       </section>
       <section className="description">

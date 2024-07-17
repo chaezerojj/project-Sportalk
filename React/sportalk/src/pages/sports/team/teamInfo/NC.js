@@ -29,10 +29,10 @@ const NC = () => {
           </div>
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/NCst.png`} alt="창원NC파크" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/NCst.png`} alt="창원NC파크" className="stadium-image" />
         </div>
         <div className="center-column">
-          <img src={`${process.env.PUBLIC_URL}/slogan7.png`} alt="슬로건" className="stadium-image" />
+          <img src={`${process.env.PUBLIC_URL}/images/slogan7.png`} alt="슬로건" className="stadium-image" />
         </div>
       </section>
       <section className="description">

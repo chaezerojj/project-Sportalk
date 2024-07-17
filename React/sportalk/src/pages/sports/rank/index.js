@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./baseball.css";
 
 const Index = () => {
-  const [teams, setTeams] = useState([
+  const [teams] = useState([
     {
       순위: 1,
       팀명: "KIA",
@@ -19,7 +19,7 @@ const Index = () => {
     {
       순위: 2,
       팀명: "삼성",
-      이미지: "삼성.png",
+      이미지: "Samsung.png",
       경기수: 87,
       승: 46,
       무: 2,
@@ -32,7 +32,7 @@ const Index = () => {
     {
       순위: 3,
       팀명: "두산",
-      이미지: "두산.png",
+      이미지: "Doosan.png",
       경기수: 89,
       승: 47,
       무: 2,
@@ -97,7 +97,7 @@ const Index = () => {
     {
       순위: 8,
       팀명: "롯데",
-      이미지: "롯데.png",
+      이미지: "Lotte.png",
       경기수: 83,
       승: 36,
       무: 3,
@@ -110,7 +110,7 @@ const Index = () => {
     {
       순위: 9,
       팀명: "한화",
-      이미지: "한화.png",
+      이미지: "Hanhwa.png",
       경기수: 85,
       승: 37,
       무: 2,
@@ -123,7 +123,7 @@ const Index = () => {
     {
       순위: 10,
       팀명: "키움",
-      이미지: "키움.png",
+      이미지: "Kiwoom.png",
       경기수: 84,
       승: 37,
       무: 0,
@@ -159,7 +159,7 @@ const Index = () => {
               <td>{team.순위}</td>
               <td>
                 <img
-                  rc={`${process.env.PUBLIC_URL}/images/${team.이미지}`}
+                  src={`${process.env.PUBLIC_URL}/images/${team.이미지}`}
                   alt={team.팀명}
                   width="30"
                   height="30"

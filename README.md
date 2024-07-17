@@ -31,134 +31,40 @@
 ```
 src
  ┣ api
- ┃ ┗ index.js
  ┣ assets
- ┃ ┣ fonts
- ┃ ┃ ┣ DungGeunMo.woff
- ┃ ┃ ┣ DungGeunMo.woff2
- ┃ ┃ ┣ Pretendard-Black.subset.woff
- ┃ ┃ ┣ Pretendard-Black.subset.woff2
- ┃ ┃ ┣ Pretendard-Bold.subset.woff
- ┃ ┃ ┣ Pretendard-Bold.subset.woff2
- ┃ ┃ ┣ Pretendard-ExtraBold.subset.woff
- ┃ ┃ ┣ Pretendard-ExtraBold.subset.woff2
- ┃ ┃ ┣ Pretendard-ExtraLight.subset.woff
- ┃ ┃ ┣ Pretendard-ExtraLight.subset.woff2
- ┃ ┃ ┣ Pretendard-Light.subset.woff
- ┃ ┃ ┣ Pretendard-Light.subset.woff2
- ┃ ┃ ┣ Pretendard-Medium.subset.woff
- ┃ ┃ ┣ Pretendard-Medium.subset.woff2
- ┃ ┃ ┣ Pretendard-Regular.subset.woff
- ┃ ┃ ┣ Pretendard-Regular.subset.woff2
- ┃ ┃ ┣ Pretendard-SemiBold.subset.woff
- ┃ ┃ ┣ Pretendard-SemiBold.subset.woff2
- ┃ ┃ ┣ Pretendard-Thin.subset.woff
- ┃ ┃ ┗ Pretendard-Thin.subset.woff2
- ┃ ┗ images
- ┃ ┃ ┗ baseball-main.png
  ┣ components
- ┃ ┣ boardDetail
- ┃ ┃ ┣ boardDetail.js
- ┃ ┃ ┣ createBoard.js
- ┃ ┃ ┣ deleteButton.js
- ┃ ┃ ┣ editBoardPage.js
- ┃ ┃ ┣ EditButton.js
- ┃ ┃ ┣ likePosts.js
- ┃ ┃ ┗ modal.js
- ┃ ┣ comment
- ┃ ┃ ┣ index.js
- ┃ ┃ ┗ index.Style.js
- ┃ ┣ Footer
- ┃ ┃ ┣ index.js
- ┃ ┃ ┗ index.Style.js
- ┃ ┣ Header
- ┃ ┃ ┣ index.js
- ┃ ┃ ┗ index.Style.js
- ┃ ┣ myPageTab
- ┃ ┃ ┣ index.js
- ┃ ┃ ┗ index.Style.js
+ ┃ ┗ boardDetail
+ ┃ ┗ comment
+ ┃ ┗ Footer
+ ┃ ┗ Header
+ ┃ ┗ myPageTab
  ┃ ┗ teamCategory
- ┃ ┃ ┣ index.js
- ┃ ┃ ┗ index.Style.js
  ┣ constants
  ┃ ┗ index.js
  ┣ contexts
- ┃ ┣ AuthContext.js
- ┃ ┗ AuthProvider.js
  ┣ models
  ┃ ┣ Post.js
  ┃ ┗ User.js
  ┣ pages
  ┃ ┣ board
- ┃ ┃ ┣ index.js
- ┃ ┃ ┣ index.Style.js
- ┃ ┃ ┣ pagination.js
- ┃ ┃ ┣ searchBar.js
- ┃ ┃ ┗ sort.js
  ┃ ┣ home
- ┃ ┃ ┣ index.js
- ┃ ┃ ┗ index.Style.js
  ┃ ┣ login
- ┃ ┃ ┣ index.js
- ┃ ┃ ┗ Login.css
  ┃ ┣ myPage
  ┃ ┃ ┣ comment
- ┃ ┃ ┃ ┣ index.js
- ┃ ┃ ┃ ┗ index.Style.js
  ┃ ┃ ┣ likedPosts
- ┃ ┃ ┃ ┣ index.js
- ┃ ┃ ┃ ┗ index.Style.js
  ┃ ┃ ┣ posts
- ┃ ┃ ┃ ┣ index.js
- ┃ ┃ ┃ ┗ index.Style.js
  ┃ ┃ ┣ profile
- ┃ ┃ ┃ ┣ index.js
- ┃ ┃ ┃ ┗ index.Style.js
  ┃ ┃ ┣ index.js
  ┃ ┃ ┗ index.Style.js
  ┃ ┣ signup
- ┃ ┃ ┣ index.js
- ┃ ┃ ┗ Signup.css
  ┃ ┣ sports
  ┃ ┃ ┣ calendar
- ┃ ┃ ┃ ┣ Calendar.css
- ┃ ┃ ┃ ┣ index.js
- ┃ ┃ ┃ ┗ kboSchedule.js
  ┃ ┃ ┣ rank
- ┃ ┃ ┃ ┣ baseball.css
- ┃ ┃ ┃ ┗ index.js
  ┃ ┃ ┗ team
- ┃ ┃ ┃ ┣ teamInfo
- ┃ ┃ ┃ ┃ ┣ Doosan.css
- ┃ ┃ ┃ ┃ ┣ Doosan.js
- ┃ ┃ ┃ ┃ ┣ Hanhwa.css
- ┃ ┃ ┃ ┃ ┣ Hanhwa.js
- ┃ ┃ ┃ ┃ ┣ Kia.css
- ┃ ┃ ┃ ┃ ┣ Kia.js
- ┃ ┃ ┃ ┃ ┣ Kiwoom.css
- ┃ ┃ ┃ ┃ ┣ Kiwoom.js
- ┃ ┃ ┃ ┃ ┣ KT.css
- ┃ ┃ ┃ ┃ ┣ KT.js
- ┃ ┃ ┃ ┃ ┣ LG.css
- ┃ ┃ ┃ ┃ ┣ LG.js
- ┃ ┃ ┃ ┃ ┣ Lotte.css
- ┃ ┃ ┃ ┃ ┣ Lotte.js
- ┃ ┃ ┃ ┃ ┣ NC.css
- ┃ ┃ ┃ ┃ ┣ NC.js
- ┃ ┃ ┃ ┃ ┣ Samsung.css
- ┃ ┃ ┃ ┃ ┣ Samsung.js
- ┃ ┃ ┃ ┃ ┣ SSG.css
- ┃ ┃ ┃ ┃ ┗ SSG.js
- ┃ ┃ ┃ ┣ index.js
- ┃ ┃ ┃ ┗ index.Style.js
+ ┃ ┃ ┃ ┗ teamInfo
  ┃ ┗ index.js
  ┣ proxy
- ┃ ┗ setupProxy.js
  ┣ routes
- ┃ ┣ boardRouter.js
- ┃ ┣ commentRouter.js
- ┃ ┣ loginRouter.js
- ┃ ┗ signUpRouter.js
  ┣ App.css
  ┣ App.js
  ┣ App.test.js
