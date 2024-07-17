@@ -12,7 +12,6 @@ export default function Index() {
 
 	const [posts,setPosts] = useState([])
 	const [filteredPosts,setFilteredPosts]=useState([])
-	const {user}=useAuth();
 	const fetchPosts=()=>{
 		fetch("/api/sportalk/board")
 			.then(res=>res.json())
