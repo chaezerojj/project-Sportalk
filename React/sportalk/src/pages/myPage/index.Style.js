@@ -5,8 +5,6 @@ export const Wrapper = styled.div`
   text-align: center;
   padding: 40px;
   margin: 40px;
-<<<<<<< HEAD
-=======
   margin-top: 100px;
 `;
 
@@ -24,5 +22,4 @@ export const LeftWrapper = styled.div`
 
 export const RightWrapper = styled.div`
   width: 1040px;
->>>>>>> 9a3d39c9ecc154e5b0cfc6397e333733266115ad
 `;

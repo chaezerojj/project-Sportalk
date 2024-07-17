@@ -35,7 +35,7 @@ public class BoardController {
 	}
 
 	// 입력받은 게시물 저장
-	@PostMapping
+	@PostMapping(value="/create")
 	public ResponseEntity<Board> createBoard(@RequestBody Board board) {
 		Board newBoard = boardService.createBoard(board);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newBoard);
@@ -51,9 +51,9 @@ public class BoardController {
 	// id값으로 게시물 상세 조회
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Board> getBoardById(@PathVariable Long id) {
-		Optional<Board> board = boardService.getBoardById(id);
-		return board.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+	    Optional<Board> board = boardService.getBoardById(id);
+	    return board.map(ResponseEntity::ok)
+	            .orElse(ResponseEntity.notFound().build());
 	}
 
 	// 게시물 수정
@@ -85,9 +85,17 @@ public class BoardController {
 		Comment newComment = commentService.createComment(comment);
 		return ResponseEntity.status(HttpStatus.CREATED).body(newComment);
 	}
-
-
-
-
+	
+	//좋아요 수 증가
+	@PostMapping(value="/{id}/like")
+	public ResponseEntity<Board> likePost(@PathVariable Long id){
+		Board board=boardService.likePost(id);
+		if(board!=null) {
+			return ResponseEntity.ok(board);
+		}
+		else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
 }

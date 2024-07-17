@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
   width: 100%;
   padding: 0;
   margin: 0;
-  border: 1px solid green;
 `;
 
 export const LikedList = styled.div`
@@ -25,9 +24,13 @@ export const ListWrapper = styled.div`
   width: 100%;
   margin: 0;
   padding: 0;
-  border: 1px solid purple;
 `;
 
 export const List = styled.div`
-  border: 1px solid red;
+`;
+export const LikedItem = styled.div`
+`;
+export const LikedTitle = styled.div`
+`;
+export const NoLikedPosts = styled.h3`
 `;

@@ -12,7 +12,7 @@ export default function Index() {
     <S.Header>
       <S.Wrapper>
         <S.Logo>
-          <Link to="/">
+          <Link to="/sportalk">
             <h2>Sportalk</h2>
           </Link>
         </S.Logo>
@@ -22,13 +22,22 @@ export default function Index() {
             <Link to="/sportalk/board">
               <h3>게시판</h3>
             </Link>
+            <Link to="/sportalk/rank">
+              <h3>랭킹</h3>
+            </Link>
+            <Link to="/sportalk/calendar">
+              <h3>경기일정</h3>
+            </Link>
+            <Link to="/sportalk/team">
+              <h3>팀</h3>
+            </Link>
           </S.BoardWrapper>
 
           <S.UserNav>
             {isLoggedIn ? (
               <>
                 <Link to="/sportalk/mypage">마이페이지</Link>
-                <button onClick={logout}>로그아웃</button>
+                <S.Button onClick={logout}>로그아웃</S.Button>
               </>
             ) : (
               <>

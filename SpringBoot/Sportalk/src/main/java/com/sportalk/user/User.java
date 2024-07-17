@@ -3,7 +3,9 @@ package com.sportalk.user;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sportalk.board.Board;
+import com.sportalk.comment.Comment;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -24,11 +26,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@ToString
+@ToString(exclude = {"boards", "comments"}) // Exclude boards and comments from toString
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "아이디를 입력해주세요.")
     @Pattern(regexp = "^[a-zA-Z0-9]{6,12}$", message = "아이디는 영어와 숫자를 포함해서 6~12자리 이내로 입력해주세요.")
@@ -56,10 +59,9 @@ public class User implements Serializable {
     private String userName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user") // Prevent infinite loop by ignoring boards
     private List<Board> boards;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 }
-
-
-
-
-

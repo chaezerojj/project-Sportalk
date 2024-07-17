@@ -1,136 +1,205 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Signup.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Signup.css";
 
-function Index() {
+const API_BASE_URL = "http://localhost:8000/api/auth";
+
+function Signup() {
   const [form, setForm] = useState({
-    userId: '',
-    password: '',
-    confirmPassword: '',
-    nickName: '',
-    name: '',
-    phoneNumber: '',
-    email: '',
-    birthYear: '',
-    birthMonth: '',
-    birthDay: '',
-    emailDomain: '@naver.com',
+    userId: "",
+    password: "",
+    confirmPassword: "",
+    nickName: "",
+    name: "",
+    email: "",
+    emailDomain: "@naver.com",
   });
 
-
   const [errors, setErrors] = useState({
-    userId: '',
-    nickName: '',
+    userId: "",
+    nickName: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
-    if (name === 'userId' && value.length < 6) {
-      setErrors({ ...errors, userId: '' });
-    } else {
-      setErrors({ ...errors, userId: '' });
+    if (name === "userId") {
+      await checkUserIdDuplicate(value);
     }
 
-    if (name === 'nickName' && value.length < 2) {
-      setErrors({ ...errors, nickName: '' });
-    } else {
-      setErrors({ ...errors, nickName: '' });
+    if (name === "nickName") {
+      await checkNicknameDuplicate(value);
+    }
+
+    if (name === "password") {
+      checkPassword(value);
+    }
+
+    if (name === "confirmPassword") {
+      validateConfirmPassword(value);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      form.userId.trim() === '' ||
-      form.password.trim() === '' ||
-      form.confirmPassword.trim() === '' ||
-      form.nickName.trim() === '' ||
-      form.name.trim() === '' ||
-      form.phoneNumber.trim() === '' ||
-      form.email.trim() === '' ||
-      form.birthYear.trim() === '' ||
-      form.birthMonth.trim() === '' ||
-      form.birthDay.trim() === ''
-    ) {
-      alert('빈 칸을 모두 작성해주세요');
-      return;
+  const checkUserIdDuplicate = async (userId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/userId`, {
+        params: { userId },
+      });
+      if (response.data) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          userid: "아이디 중복",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          userid: "",
+        }));
+        alert("사용 가능한 아이디입니다.");
+      }
+    } catch (error) {
+      console.error("Error checking userId: ", error);
     }
-    if (form.password !== form.confirmPassword) {
-      alert('비밀번호가 일치하지 않습니다');
+  };
+
+  const checkNicknameDuplicate = async (nickName) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/nickName`, {
+        params: { nickName },
+      });
+      if (response.data) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          nickname: "닉네임 중복",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          nickname: "",
+        }));
+        alert("사용 가능한 닉네임입니다.");
+      }
+    } catch (error) {
+      console.error("Error checking nickName: ", error);
+    }
+  };
+
+  const checkPassword = async (password) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/password`, {
+        params: { password },
+      });
+      if (!response.data) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "비밀번호는 10자 이상 20자 이하로 입력해주세요.",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          password: "",
+        }));
+      }
+    } catch (error) {
+      console.error("Error checking password: ", error);
+    }
+  };
+
+  const validateConfirmPassword = (confirmPassword) => {
+    if (confirmPassword !== form.password) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "비밀번호가 일치하지 않습니다.",
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "",
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const {
+      userId,
+      password,
+      confirmPassword,
+      nickName,
+      name,
+      email,
+      emailDomain,
+    } = form;
+
+    if (
+      userId.trim() === "" ||
+      password.trim() === "" ||
+      confirmPassword.trim() === "" ||
+      nickName.trim() === "" ||
+      name.trim() === "" ||
+      email.trim() === ""
+    ) {
+      alert("빈 칸을 모두 작성해주세요");
       return;
     }
 
-    console.log(form);
-    alert('회원가입되었습니다');
-    navigate('/sportalk/login');
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다");
+      return;
+    }
+
+    if (
+      errors.userId !== "" ||
+      errors.nickName !== "" ||
+      errors.password !== "" ||
+      errors.confirmPassword !== ""
+    ) {
+      alert("회원가입 양식을 올바르게 작성해주세요.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/signup`, {
+        userId,
+        password,
+        nickName,
+        name,
+        email: `${email}${emailDomain}`,
+      }, {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
+      });
+      console.log("회원가입 성공:", response.data);
+      alert("회원가입 되었습니다");
+      navigate("/sportalk/login");
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+      alert("회원가입에 실패했습니다.");
+    }
   };
 
   const handleCancel = () => {
-    alert('취소되었습니다');
-    navigate('/');
+    alert("회원가입이 취소되었습니다");
+    navigate("/");
   };
 
-  const handleCheckDuplicate = (field) => {
-    let value = form[field].trim();
-    if (value === '') {
-      alert(`${field === 'userId' ? '아이디' : '닉네임'}를 입력해주세요`);
-      return;
-    }
-    if (field === 'userId' && value.length < 6) {
-      alert('아이디는 6자 이상이어야 합니다');
-      return;
-    }
-    if (field === 'nickName' && value.length < 2) {
-      alert('닉네임은 2자 이상이어야 합니다');
-      return;
-    }
-
-    console.log(`'${value}'를 확인 중입니다...`);
-    const isDuplicate = false;
-
-    if (isDuplicate) {
-      alert(`'${value}'는 이미 사용 중입니다. 다른 ${field === 'userId' ? '아이디' : '닉네임'}를 입력해주세요.`);
-    } else {
-      alert(`'${value}'는 사용 가능한 ${field === 'userId' ? '아이디' : '닉네임'}입니다.`);
-    }
-  };
-
-  const emailDomains = ['@naver.com', '@gmail.com', '@daum.net', '@hanmail.net', '@yahoo.com'];
-
-  const birthYearOptions = [];
-  for (let year = 1950; year <= 2010; year++) {
-    birthYearOptions.push(
-      <option key={year} value={year}>
-        {year}년
-      </option>
-    );
-  }
-
-  const birthMonthOptions = [];
-  for (let month = 1; month <= 12; month++) {
-    birthMonthOptions.push(
-      <option key={month} value={month}>
-        {month}월
-      </option>
-    );
-  }
-
-  const birthDayOptions = [];
-  for (let day = 1; day <= 31; day++) {
-    birthDayOptions.push(
-      <option key={day} value={day}>
-        {day}일
-      </option>
-    );
-  }
-
+  const emailDomains = [
+    "@naver.com",
+    "@gmail.com",
+    "@daum.net",
+    "@hanmail.net",
+    "@yahoo.com",
+  ];
   return (
     <div className="signup-container">
-      <form onSubmit={handleSubmit} className="signup-form">
+      <form onSubmit={handleSubmit} className="signup-form" method="POST">
         <h2>회원가입</h2>
         <div className="form-group">
           <label htmlFor="userId">아이디</label>
@@ -146,12 +215,16 @@ function Index() {
             <button
               type="button"
               className="check-duplicate"
-              onClick={() => handleCheckDuplicate('userId')}
+              onClick={() => checkUserIdDuplicate(form.userId)}
             >
               중복확인
             </button>
           </div>
-          {errors.userId && <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>{errors.userId}</p>}
+          {errors.userId && (
+            <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
+              {errors.userId}
+            </p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="nickName">닉네임</label>
@@ -167,12 +240,16 @@ function Index() {
             <button
               type="button"
               className="check-duplicate"
-              onClick={() => handleCheckDuplicate('nickName')}
+              onClick={() => checkNicknameDuplicate(form.nickName)}
             >
               중복확인
             </button>
           </div>
-          {errors.nickName && <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>{errors.nickName}</p>}
+          {errors.nickName && (
+            <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
+              {errors.nickName}
+            </p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="password">비밀번호</label>
@@ -184,6 +261,11 @@ function Index() {
             onChange={handleChange}
             placeholder="비밀번호 입력 (10-20자)"
           />
+          {errors.password && (
+            <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
+              {errors.password}
+            </p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="confirmPassword">비밀번호 확인</label>
@@ -195,6 +277,11 @@ function Index() {
             onChange={handleChange}
             placeholder="비밀번호 재입력"
           />
+          {errors.confirmPassword && (
+            <p style={{ color: "red", fontSize: "0.8em", marginTop: "5px" }}>
+              {errors.confirmPassword}
+            </p>
+          )}
         </div>
         <div className="form-group">
           <label htmlFor="name">이름</label>
@@ -208,23 +295,6 @@ function Index() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="phoneNumber">전화번호</label>
-          <input
-            type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={form.phoneNumber}
-            onChange={handleChange}
-            placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)"
-            maxLength={11} 
-          />
-          {form.phoneNumber.length > 0 && form.phoneNumber.length < 11 && (
-            <p style={{ color: 'red', fontSize: '0.8em', marginTop: '5px' }}>
-              전화번호는 11자입니다.
-            </p>
-          )}
-        </div>
-        <div className="form-group">
           <label htmlFor="email">이메일 주소</label>
           <div className="email-input">
             <input
@@ -235,7 +305,12 @@ function Index() {
               onChange={handleChange}
               placeholder="이메일 주소"
             />
-            <select id="emailDomain" name="emailDomain" value={form.emailDomain} onChange={handleChange}>
+            <select
+              id="emailDomain"
+              name="emailDomain"
+              value={form.emailDomain}
+              onChange={handleChange}
+            >
               {emailDomains.map((domain) => (
                 <option key={domain} value={domain}>
                   {domain}
@@ -244,30 +319,15 @@ function Index() {
             </select>
           </div>
         </div>
-        <div className="form-group">
-          <label>생년월일</label>
-          <div className="birthdate-input">
-            <select name="birthYear" value={form.birthYear} onChange={handleChange}>
-              <option value="">년도</option>
-              {birthYearOptions}
-            </select>
-            <select name="birthMonth" value={form.birthMonth} onChange={handleChange}>
-              <option value="">월</option>
-              {birthMonthOptions}
-            </select>
-            <select name="birthDay" value={form.birthDay} onChange={handleChange}>
-              <option value="">일</option>
-              {birthDayOptions}
-            </select>
-          </div>
-        </div>
         <div className="button-group">
           <button type="submit">가입하기</button>
-          <button type="button" onClick={handleCancel}>가입취소</button>
+          <button type="button" onClick={handleCancel}>
+            가입취소
+          </button>
         </div>
       </form>
     </div>
   );
 }
 
-export default Index;
+export default Signup;

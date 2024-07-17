@@ -2,6 +2,8 @@ package com.sportalk.comment;
 
 import java.sql.Date;
 import com.sportalk.board.Board;
+import com.sportalk.user.User;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,10 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id; // 고유 아이디
+    
+    @ManyToOne
+    @JoinColumn(name= "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "board_id", nullable = false)
@@ -29,7 +35,8 @@ public class Comment {
     @Column(nullable = false)
     private String comment; // 댓글 내용
 
-    @Column(nullable = false, unique = true)
+//    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String nickName; // 닉네임
 
     @Column(nullable = false)

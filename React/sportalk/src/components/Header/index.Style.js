@@ -67,11 +67,12 @@ export const Nav = styled.div`
 `;
 
 export const BoardWrapper = styled.div`
-
+  display: flex;
+  flex-direction: row;
 `;
 
 export const UserNav = styled.div`
-width: 300px;
+  width: 300px;
   padding: 20px;
   font-size: 22px;
   display: flex;
@@ -87,5 +88,16 @@ width: 300px;
     &:hover {
       color: rgb(0, 0, 0);
     }
+  }
+`;
+
+export const Button = styled.button`
+  font-family: "Tenada";
+  font-size: 22px;
+  border: none;
+  background-color: transparent;
+  color: rgb(70, 70, 70);
+  &:hover {
+    color: rgb(0, 0, 0);
   }
 `;
