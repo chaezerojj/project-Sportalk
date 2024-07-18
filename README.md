@@ -1,5 +1,6 @@
-# ⚾project-Sportalk
+# ⚾Sportalk
 ### 코리아 IT 아카데미 - 정보처리기능사A 1조
++ 국내 프로야구를 좋아하는 팬들의 온라인 커뮤니티 웹 어플리케이션
 
 ### 🙌 팀원 구성
 - 진채영 ([@chaezerojj](https://github.com/chaezerojj))
